@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.och.system.mapper.CallRecordMapper">
+
+    <resultMap type="com.och.system.domain.entity.CallRecord" id="CallRecordMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="callId" column="call_id" jdbcType="VARCHAR"/>
+        <result property="callerNumber" column="caller_number" jdbcType="VARCHAR"/>
+        <result property="callerDisplayNumber" column="caller_display_number" jdbcType="VARCHAR"/>
+        <result property="calleeNumber" column="callee_number" jdbcType="VARCHAR"/>
+        <result property="calleeDisplayNumber" column="callee_display_number" jdbcType="VARCHAR"/>
+        <result property="numberLocation" column="number_location" jdbcType="VARCHAR"/>
+        <result property="agentId" column="agent_id" jdbcType="INTEGER"/>
+        <result property="agentNumber" column="agent_number" jdbcType="VARCHAR"/>
+        <result property="agentName" column="agent_name" jdbcType="VARCHAR"/>
+        <result property="callState" column="call_state" jdbcType="INTEGER"/>
+        <result property="direction" column="direction" jdbcType="INTEGER"/>
+        <result property="callStartTime" column="call_start_time" jdbcType="TIMESTAMP"/>
+        <result property="callEndTime" column="call_end_time" jdbcType="TIMESTAMP"/>
+        <result property="answerFlag" column="answer_flag" jdbcType="INTEGER"/>
+        <result property="answerTime" column="answer_time" jdbcType="TIMESTAMP"/>
+        <result property="ringingTime" column="ringing_time" jdbcType="TIMESTAMP"/>
+        <result property="hangupDir" column="hangup_dir" jdbcType="INTEGER"/>
+        <result property="hangupCauseCode" column="hangup_cause_code" jdbcType="INTEGER"/>
+        <result property="filePath" column="file_path" jdbcType="VARCHAR"/>
+        <result property="ringingPath" column="ringing_path" jdbcType="VARCHAR"/>
+        <result property="recordUrl" column="record_url" jdbcType="VARCHAR"/>
+        <result property="recordDuration" column="record_duration" jdbcType="INTEGER"/>
+        <result property="recordStatus" column="record_status" jdbcType="INTEGER"/>
+        <result property="satisfaction" column="satisfaction" jdbcType="VARCHAR"/>
+        <result property="satisfactionTime" column="satisfaction_time" jdbcType="TIMESTAMP"/>
+        <result property="gatewayId" column="gateway_id" jdbcType="BIGINT"/>
+        <result property="gatewayName" column="gateway_name" jdbcType="VARCHAR"/>
+        <result property="fromGatewayId" column="from_gateway_id" jdbcType="BIGINT"/>
+        <result property="fromGatewayName" column="from_gateway_name" jdbcType="VARCHAR"/>
+        <result property="did" column="did" jdbcType="VARCHAR"/>
+        <result property="originalCallee" column="original_callee" jdbcType="VARCHAR"/>
+        <result property="convertedCallee" column="converted_callee" jdbcType="VARCHAR"/>
+        <result property="routeId" column="route_id" jdbcType="BIGINT"/>
+        <result property="routeName" column="route_name" jdbcType="VARCHAR"/>
+        <result property="recordStartTime" column="record_start_time" jdbcType="TIMESTAMP"/>
+        <result property="recordEndTime" column="record_end_time" jdbcType="TIMESTAMP"/>
+        <result property="sipStatus" column="sip_status" jdbcType="VARCHAR"/>
+        <result property="failureReason" column="failure_reason" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+  <sql id="selectCallRecordInfoVo">
+     
+   </sql>
+    <select id="getCallPageList" resultType="com.och.system.domain.vo.call.CallRecordVo">
+        SELECT
+        cr.id,
+        cr.call_id,
+        cr.caller_number,
+        cr.caller_display_number,
+        cr.callee_number,
+        cr.callee_display_number,
+        cr.number_location,
+        cr.agent_id,
+        cr.agent_number,
+        cr.agent_name,
+        cr.call_state,
+        cr.direction,
+        cr.call_start_time,
+        cr.call_end_time,
+        cr.answer_flag,
+        cr.answer_time,
+        cr.ringing_time,
+        cr.hangup_dir,
+        cr.hangup_cause_code,
+        cr.file_path,
+        cr.ringing_path,
+        cr.record_url,
+        cr.record_duration,
+        cr.record_status,
+        cr.satisfaction,
+        cr.satisfaction_time,
+        cr.gateway_id,
+        cr.gateway_name,
+        cr.from_gateway_id,
+        cr.from_gateway_name,
+        cr.did,
+        cr.original_callee,
+        cr.converted_callee,
+        cr.route_id,
+        cr.route_name,
+        cr.record_start_time,
+        cr.record_end_time,
+        cr.sip_status,
+        cr.failure_reason,
+        cr.create_by,
+        cr.create_time,
+        cr.update_by,
+        cr.update_time
+        FROM call_record cr
+        <where>
+            cr.del_flag = 0
+            <if test="callId != null and callId != ''">
+                AND cr.call_id = #{callId}
+            </if>
+            <if test="agentNumber != null and agentNumber != ''">
+                AND cr.agent_number = #{agentNumber}
+            </if>
+            <if test="callerNumber != null and callerNumber != ''">
+                AND cr.caller_number = #{callerNumber}
+            </if>
+            <if test="calleeNumber != null and calleeNumber != ''">
+                AND cr.callee_number = #{calleeNumber}
+            </if>
+            <if test="beginTime != null">
+                AND cr.call_start_time &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null">
+                AND cr.call_end_time &lt;= #{endTime}
+            </if>
+            <if test="recordStatus != null">
+                AND cr.record_status = #{recordStatus}
+            </if>
+            <if test="satisfaction != null and satisfaction != ''">
+                AND cr.satisfaction = #{satisfaction}
+            </if>
+            <if test="direction != null">
+                AND cr.direction = #{direction}
+            </if>
+            <if test="gatewayId != null">
+                AND cr.gateway_id = #{gatewayId}
+            </if>
+            <if test="fromGatewayId != null">
+                AND cr.from_gateway_id = #{fromGatewayId}
+            </if>
+            <if test="did != null and did != ''">
+                AND cr.did = #{did}
+            </if>
+            <if test="callState != null">
+                AND cr.call_state = #{callState}
+            </if>
+        </where>
+        order by cr.id desc
+    </select>
+
+</mapper>

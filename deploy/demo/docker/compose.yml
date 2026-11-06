@@ -1,0 +1,211 @@
+name: xhbt-demo
+
+x-app-environment: &app-environment
+  OCH_DB_URL: ${OCH_DB_URL:?Prepare docker/.env first}
+  OCH_DB_HOST: ${OCH_DB_HOST:-mysql8}
+  OCH_DB_PORT: ${OCH_DB_PORT:-3306}
+  OCH_DB_NAME: ${OCH_DB_NAME:-xhbt_demo}
+  OCH_DB_USER: ${OCH_DB_USER:?Missing MySQL user}
+  OCH_DB_PASSWORD: ${OCH_DB_PASSWORD:?Missing MySQL password}
+  OCH_REDIS_HOST: ${OCH_REDIS_HOST:-redis}
+  OCH_REDIS_PORT: ${OCH_REDIS_PORT:-6379}
+  OCH_REDIS_PASSWORD: ${OCH_REDIS_PASSWORD:-}
+  OCH_REDIS_DATABASE: ${OCH_REDIS_DATABASE:-10}
+  OCH_BIND_ADDRESS: 0.0.0.0
+  OCH_API_PORT: "14320"
+  OCH_FILE_PORT: "19527"
+  OCH_RECORDING_FS_PROFILE: /app/runtime/public/recordings
+  OCH_FILE_BASE_PROFILE: /app/runtime/public/files
+  OCH_ASR_PROVIDER: MOCK
+  OCH_AUDIO_STREAM_ENABLED: "false"
+  OCH_PUBLIC_HOST: ${OCH_PUBLIC_HOST:-127.0.0.1}
+  OCH_FS_CONTAINER_NETWORK: "true"
+  OCH_FS_PUBLIC_IP: ${OCH_FS_PUBLIC_IP:?Set the reachable Docker server IPv4 address}
+  OCH_FS_ESL_HOST: freeswitch
+  OCH_FS_ESL_PASSWORD: ${OCH_FS_ESL_PASSWORD:?Missing private ESL password}
+  OCH_FS_XML_CURL_SECRET: ${OCH_FS_XML_CURL_SECRET:?Missing XML-curl secret}
+  OCH_FS_SIP_PASSWORD_1001: ${OCH_FS_SIP_PASSWORD_1001:?Missing demo SIP secret}
+  OCH_FS_SIP_PASSWORD_1002: ${OCH_FS_SIP_PASSWORD_1002:?Missing demo SIP secret}
+  S3_ENDPOINT: http://rustfs:9000
+  S3_ACCESS_KEY: ${OCH_RUSTFS_ACCESS_KEY:?Missing private RustFS access key}
+  S3_SECRET_KEY: ${OCH_RUSTFS_SECRET_KEY:?Missing private RustFS secret key}
+  S3_STORAGE_BUCKET: ${OCH_RUSTFS_BUCKET:-xhbt-demo-recordings}
+  S3_STORAGE_REGION: us-east-1
+  OCH_S3_DOWNLOAD_PREFIX: /object-storage
+
+services:
+  rustfs:
+    image: rustfs/rustfs:1.0.4@sha256:ed9210d6411d77ffceb70d94b964a3cb7d225983368bc25bebe01e995293dcc2
+    environment:
+      RUSTFS_VOLUMES: /data
+      RUSTFS_ADDRESS: 0.0.0.0:9000
+      RUSTFS_CONSOLE_ADDRESS: 0.0.0.0:9001
+      RUSTFS_CONSOLE_ENABLE: "true"
+      RUSTFS_ACCESS_KEY: ${OCH_RUSTFS_ACCESS_KEY:?Missing private RustFS access key}
+      RUSTFS_SECRET_KEY: ${OCH_RUSTFS_SECRET_KEY:?Missing private RustFS secret key}
+      RUSTFS_OBS_LOG_DIRECTORY: /logs
+      RUSTFS_OBS_LOGGER_LEVEL: warn
+    ports:
+      - "127.0.0.1:19002:9000"
+      - "127.0.0.1:19003:9001"
+    volumes:
+      - rustfs-data:/data
+      - rustfs-logs:/logs
+    networks: [infra]
+    healthcheck:
+      test: [CMD-SHELL, "curl -fsS http://127.0.0.1:9000/health && curl -fsS http://127.0.0.1:9001/rustfs/console/health"]
+      interval: 15s
+      timeout: 10s
+      start_period: 40s
+      retries: 8
+    restart: unless-stopped
+    mem_limit: 2048m
+    cpus: 2
+    security_opt: [no-new-privileges:true]
+
+  freeswitch:
+    image: xinhengbotong-demo-freeswitch:1.11.3
+    build:
+      context: ./freeswitch
+    environment:
+      OCH_FS_PUBLIC_IP: ${OCH_FS_PUBLIC_IP:?Set the reachable Docker server IPv4 address}
+      OCH_FS_ESL_PASSWORD: ${OCH_FS_ESL_PASSWORD:?Missing private ESL password}
+      OCH_FS_XML_CURL_SECRET: ${OCH_FS_XML_CURL_SECRET:?Missing XML-curl secret}
+    ports:
+      - "${OCH_SIP_BIND_ADDRESS:-127.0.0.1}:5060:5060/udp"
+      - "${OCH_SIP_BIND_ADDRESS:-127.0.0.1}:5060:5060/tcp"
+      - "${OCH_SIP_BIND_ADDRESS:-127.0.0.1}:5066:5066/tcp"
+      - "${OCH_SIP_BIND_ADDRESS:-127.0.0.1}:20000-20199:20000-20199/udp"
+    volumes:
+      - recordings:/app/runtime/public/recordings
+      - files:/app/runtime/public/files:ro
+      - fs-data:/usr/local/freeswitch/db
+      - fs-logs:/usr/local/freeswitch/log
+    networks: [infra]
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, python3, /opt/xhbt/entrypoint.py, --check]
+      interval: 15s
+      timeout: 10s
+      start_period: 30s
+      retries: 8
+    restart: unless-stopped
+    mem_limit: 1024m
+    stop_grace_period: 30s
+
+  api:
+    image: xinhengbotong-demo-api:2026.10
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment: *app-environment
+    restart: unless-stopped
+    networks: [infra]
+    volumes:
+      - files:/app/runtime/public/files
+      - recordings:/app/runtime/public/recordings
+      - logs:/app/logs
+    healthcheck:
+      test: [CMD, java, -cp, /app/tools, DemoHealthCheck]
+      interval: 15s
+      timeout: 12s
+      start_period: 60s
+      retries: 6
+    mem_limit: 1536m
+    depends_on:
+      rustfs:
+        condition: service_healthy
+
+  web:
+    image: nginx:1.28-alpine
+    ports:
+      - "${OCH_WEB_BIND_ADDRESS:-127.0.0.1}:${OCH_WEB_PORT:-8088}:8080"
+    volumes:
+      - ../web:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks: [infra]
+    depends_on:
+      api:
+        condition: service_healthy
+      freeswitch:
+        condition: service_healthy
+    restart: unless-stopped
+
+  fs-setup:
+    image: xinhengbotong-demo-api:2026.10
+    profiles: [init]
+    environment: *app-environment
+    entrypoint: [java, -cp, "/app/tools/*:/app/tools", DemoFreeSwitch]
+    networks: [infra]
+    restart: "no"
+
+  storage-setup:
+    image: xinhengbotong-demo-api:2026.10
+    profiles: [init]
+    environment: *app-environment
+    entrypoint: [java, -Dloader.path=/app/tools, -Dloader.main=DemoObjectStorage, -cp, /app/app/och-api.jar, org.springframework.boot.loader.launch.PropertiesLauncher, --init]
+    networks: [infra]
+    restart: "no"
+
+  verify-storage:
+    image: xinhengbotong-demo-api:2026.10
+    profiles: [init]
+    environment: *app-environment
+    entrypoint: [java, -Dloader.path=/app/tools, -Dloader.main=DemoObjectStorage, -cp, /app/app/och-api.jar, org.springframework.boot.loader.launch.PropertiesLauncher, --check]
+    networks: [infra]
+    restart: "no"
+
+  verify-fs:
+    image: xinhengbotong-demo-api:2026.10
+    profiles: [init]
+    environment: *app-environment
+    entrypoint: [java, -cp, "/app/tools/*:/app/tools", DemoFreeSwitch, --check]
+    networks: [infra]
+    restart: "no"
+
+  init:
+    image: xinhengbotong-demo-api:2026.10
+    profiles: [init]
+    environment:
+      <<: *app-environment
+      OCH_DB_CREATE: "true"
+      OCH_BOOTSTRAP_PASSWORD: ${OCH_BOOTSTRAP_PASSWORD:-}
+    entrypoint: [java, -cp, "/app/tools/*:/app/tools", DemoDatabase, /app/database/01-schema.sql, /app/database/02-seed.sql]
+    networks: [infra]
+    restart: "no"
+
+  check-redis:
+    image: redis:7-alpine
+    profiles: [init]
+    environment:
+      REDISCLI_AUTH: ${OCH_REDIS_PASSWORD:-}
+      OCH_REDIS_HOST: ${OCH_REDIS_HOST:-redis}
+      OCH_REDIS_PORT: ${OCH_REDIS_PORT:-6379}
+      OCH_REDIS_DATABASE: ${OCH_REDIS_DATABASE:-10}
+    entrypoint:
+      - sh
+      - -ec
+      - |
+        count=$$(redis-cli --no-auth-warning -h "$$OCH_REDIS_HOST" -p "$$OCH_REDIS_PORT" -n "$$OCH_REDIS_DATABASE" DBSIZE)
+        case "$$count" in
+          0) echo 'Dedicated Redis database is empty; ready' ;;
+          *) echo 'Redis authentication failed or selected database is not empty; choose an unused database' >&2; exit 1 ;;
+        esac
+    networks: [infra]
+    restart: "no"
+
+networks:
+  infra:
+    external: true
+    name: ${OCH_DOCKER_NETWORK:?Set the shared network of mysql8 and redis}
+
+volumes:
+  files:
+  recordings:
+  logs:
+  fs-data:
+  fs-logs:
+  rustfs-data:
+  rustfs-logs:

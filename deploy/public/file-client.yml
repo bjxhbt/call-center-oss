@@ -1,0 +1,6 @@
+netty:
+  server:
+    host: ${OCH_FILE_HOST:127.0.0.1}
+    port: ${OCH_FILE_PORT:9527}
+  file:
+    path: ${OCH_FILE_CLIENT_PATH:./runtime/public/files}

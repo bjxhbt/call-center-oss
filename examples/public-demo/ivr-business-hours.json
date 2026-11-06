@@ -1,0 +1,18 @@
+{
+  "nodes": [
+    {"id":"start","type":"start-node","x":280,"y":100,"properties":{"name":"Start","businessType":0,"recording":true}},
+    {"id":"clock","type":"assign-node","x":280,"y":300,"properties":{"name":"Read current hour","businessType":10,"variable":"hour","expression":"date_to_string(sysdate(),\"HH\")","event":"next"}},
+    {"id":"hours","type":"condition-node","x":280,"y":500,"properties":{"name":"09:00-18:00 server time","businessType":9,"branches":[{"expression":"hour>=9&&hour<18","event":"open"}],"defaultEvent":"closed"}},
+    {"id":"support","type":"transfer-node","x":100,"y":750,"properties":{"name":"Demo support skill","businessType":5,"routeType":4,"routeValue":"1"}},
+    {"id":"closed","type":"hangup-node","x":500,"y":750,"properties":{"name":"Outside business hours","businessType":6}},
+    {"id":"end","type":"end-node","x":280,"y":1000,"properties":{"name":"End","businessType":1}}
+  ],
+  "edges": [
+    {"id":"start-clock","type":"polyline","sourceNodeId":"start","targetNodeId":"clock","event":"next"},
+    {"id":"clock-hours","type":"polyline","sourceNodeId":"clock","targetNodeId":"hours","event":"next"},
+    {"id":"hours-support","type":"polyline","sourceNodeId":"hours","targetNodeId":"support","event":"open"},
+    {"id":"hours-closed","type":"polyline","sourceNodeId":"hours","targetNodeId":"closed","event":"closed"},
+    {"id":"support-end","type":"polyline","sourceNodeId":"support","targetNodeId":"end","event":"next"},
+    {"id":"closed-end","type":"polyline","sourceNodeId":"closed","targetNodeId":"end","event":"next"}
+  ]
+}

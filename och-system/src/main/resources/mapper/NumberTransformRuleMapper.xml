@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.och.system.mapper.NumberTransformRuleMapper">
+
+    <resultMap type="com.och.system.domain.entity.NumberTransformRule" id="NumberTransformRuleMap">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="direction" column="direction" jdbcType="INTEGER"/>
+        <result property="gatewayId" column="gateway_id" jdbcType="BIGINT"/>
+        <result property="matchType" column="match_type" jdbcType="INTEGER"/>
+        <result property="matchValue" column="match_value" jdbcType="VARCHAR"/>
+        <result property="stripPrefix" column="strip_prefix" jdbcType="VARCHAR"/>
+        <result property="addPrefix" column="add_prefix" jdbcType="VARCHAR"/>
+        <result property="replaceTo" column="replace_to" jdbcType="VARCHAR"/>
+        <result property="callerReplace" column="caller_replace" jdbcType="VARCHAR"/>
+        <result property="minLength" column="min_length" jdbcType="INTEGER"/>
+        <result property="maxLength" column="max_length" jdbcType="INTEGER"/>
+        <result property="priority" column="priority" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="selectColumns">
+        ntr.id, ntr.name, ntr.direction, ntr.gateway_id, ntr.match_type, ntr.match_value,
+        ntr.strip_prefix, ntr.add_prefix, ntr.replace_to, ntr.caller_replace,
+        ntr.min_length, ntr.max_length, ntr."priority", ntr.status, ntr.remark,
+        ntr.create_by, ntr.create_time, ntr.update_by, ntr.update_time
+    </sql>
+
+    <select id="getList" resultType="com.och.system.domain.vo.number.NumberTransformRuleVo">
+        select <include refid="selectColumns"/>,
+               gw.name as gateway_name
+        from number_transform_rule ntr
+        left join fs_sip_gateway gw on gw.id = ntr.gateway_id and gw.del_flag = 0
+        <where>
+            ntr.del_flag = 0
+            <if test="name != null and name != ''">
+                and ntr.name like '%' || #{name} || '%'
+            </if>
+            <if test="direction != null">
+                and ntr.direction = #{direction}
+            </if>
+            <if test="gatewayId != null">
+                and ntr.gateway_id = #{gatewayId}
+            </if>
+            <if test="matchType != null">
+                and ntr.match_type = #{matchType}
+            </if>
+            <if test="status != null">
+                and ntr.status = #{status}
+            </if>
+            <if test="ids != null and ids.size() > 0">
+                and ntr.id in
+                <foreach collection="ids" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by ntr."priority" asc, ntr.id desc
+    </select>
+
+    <select id="getDetail" resultType="com.och.system.domain.vo.number.NumberTransformRuleVo">
+        select <include refid="selectColumns"/>,
+               gw.name as gateway_name
+        from number_transform_rule ntr
+        left join fs_sip_gateway gw on gw.id = ntr.gateway_id and gw.del_flag = 0
+        where ntr.id = #{id} and ntr.del_flag = 0
+    </select>
+
+</mapper>

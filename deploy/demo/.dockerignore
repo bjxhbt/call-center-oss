@@ -1,0 +1,12 @@
+**
+!app/
+!app/och-api.jar
+!config/
+!config/application.yml
+!tools/
+!tools/*.java
+!tools/*.jar
+!database/
+!database/*.sql
+!docker/
+!docker/Dockerfile

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.och.system.mapper.CallHolidayMapper">
+    <resultMap type="com.och.system.domain.entity.CallHoliday" id="CallHolidayMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="holidayDate" column="holiday_date" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="getList" resultMap="CallHolidayMap">
+        select id, holiday_date, "type", "name", create_time, del_flag from call_holiday
+        <where>
+            <if test="id != null">and id = #{id}</if>
+            <if test="ids != null and ids.size() > 0">and id in <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach></if>
+            <if test="holidayDate != null and holidayDate != ''">and holiday_date = #{holidayDate}</if>
+            <if test="type != null">and "type" = #{type}</if>
+            <if test="name != null and name != ''">and "name" like '%' || #{name} || '%'</if>
+            and del_flag = 0
+        </where>
+        order by holiday_date asc
+    </select>
+</mapper>

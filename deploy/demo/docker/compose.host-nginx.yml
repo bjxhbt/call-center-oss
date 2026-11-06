@@ -1,0 +1,6 @@
+services:
+  api:
+    ports:
+      - "127.0.0.1:14320:14320"
+  web:
+    profiles: [container-nginx]

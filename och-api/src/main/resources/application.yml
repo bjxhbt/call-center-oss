@@ -1,0 +1,151 @@
+# MySQL demo only. Load with --spring.config.location=file:./config/application.yml
+server:
+  address: ${OCH_BIND_ADDRESS:127.0.0.1}
+  port: ${OCH_API_PORT:14320}
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: och-api
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${OCH_DB_URL:jdbc:mysql://127.0.0.1:3306/xhbt_demo?characterEncoding=UTF-8&serverTimezone=Asia/Shanghai}
+    username: ${OCH_DB_USER:xhbt_demo}
+    password: ${OCH_DB_PASSWORD}
+    druid:
+      initial-size: 1
+      min-idle: 1
+      max-active: 10
+      validation-query: SELECT 1
+      # MysqlDataSourceConfig binds these properties explicitly on Boot 3.
+      connection-init-sqls:
+        - "SET SESSION sql_mode = CONCAT(@@sql_mode, ',ANSI_QUOTES,PIPES_AS_CONCAT')"
+      stat-view-servlet:
+        enabled: false
+  data:
+    redis:
+      host: ${OCH_REDIS_HOST:127.0.0.1}
+      port: ${OCH_REDIS_PORT:6379}
+      password: ${OCH_REDIS_PASSWORD:}
+      database: ${OCH_REDIS_DATABASE:10}
+      client-type: jedis
+      timeout: 10s
+  quartz:
+    job-store-type: memory
+    auto-startup: false
+  ai:
+    dashscope:
+      # Existing ChatClient wiring needs a nonempty value; no model is called at startup.
+      api-key: ${OCH_DASHSCOPE_API_KEY:not-configured}
+
+freeswitch:
+  container-network: ${OCH_FS_CONTAINER_NETWORK:false}
+  advertised-ip: ${OCH_FS_PUBLIC_IP:}
+  external-auth-calls: ${OCH_FS_EXTERNAL_AUTH_CALLS:true}
+  thread-num: 4
+  queue-capacity: 1000
+  internal-codec: '^^:PCMA:PCMU'
+  group: public-demo
+  outbound:
+    access-prefix: ''
+    destination-prefix: ''
+
+fs:
+  xml-curl:
+    auth-scheme: basic
+    secretKey: ${OCH_FS_XML_CURL_SECRET:disabled-no-freeswitch}
+
+system:
+  setting:
+    localHost: ${OCH_PUBLIC_HOST:127.0.0.1}
+    fsProfile: ${OCH_RECORDING_FS_PROFILE:./runtime/public/recordings}
+    fsFileSuffix: .wav
+    baseProfile: ${OCH_FILE_BASE_PROFILE:./runtime/public/files}
+    uploadType: local
+    ttsType: ali
+
+file-server:
+  port: ${OCH_FILE_PORT:19527}
+  bossThreads: 1
+  workerThreads: 2
+  heartbeat:
+    maxLostAttempts: 3
+    checkInterval: 5000
+
+s3-storage:
+  endpoint: ${S3_ENDPOINT:http://127.0.0.1:9000}
+  access-key: ${S3_ACCESS_KEY:local-example}
+  secret-key: ${S3_SECRET_KEY:local-example-only}
+  bucket: ${S3_STORAGE_BUCKET:call-recordings}
+  region: ${S3_STORAGE_REGION:us-east-1}
+  download-prefix: ${OCH_S3_DOWNLOAD_PREFIX:}
+
+och:
+  database:
+    type: mysql
+  recording:
+    notice-path: ${OCH_RECORDING_NOTICE_PATH:}
+    play-base-url: ${OCH_RECORDING_PLAY_BASE_URL:}
+  ivr:
+    agent-busy-prompt: ${OCH_AGENT_BUSY_PROMPT:}
+    off-hours-prompt: ${OCH_OFF_HOURS_PROMPT:}
+    agent-ring-timeout-seconds: 30
+  asr:
+    enabled: true
+    provider: ${OCH_ASR_PROVIDER:MOCK}
+    sample-rate: 16000
+    max-reconnect: 2
+    final-wait-timeout-ms: 5000
+    audio-stream:
+      enabled: ${OCH_AUDIO_STREAM_ENABLED:false}
+      module: audio_fork
+      endpoint: ${OCH_ASR_AUDIO_STREAM_ENDPOINT:ws://127.0.0.1:4320/asr/v1/audio/stream}
+      stream-token: ${OCH_ASR_STREAM_TOKEN:}
+      sample-rate: 8000
+      mix-type: mono
+      both-legs: false
+    tencent:
+      enabled: ${OCH_ASR_TENCENT_ENABLED:false}
+      app-id: ${OCH_ASR_TENCENT_APPID:}
+      secret-id: ${OCH_ASR_TENCENT_SECRETID:}
+      secret-key: ${OCH_ASR_TENCENT_SECRETKEY:}
+    aliyun:
+      enabled: ${OCH_ASR_ALIYUN_ENABLED:false}
+      app-key: ${OCH_ASR_ALIYUN_APPKEY:}
+      access-token: ${OCH_ASR_ALIYUN_TOKEN:}
+    funasr:
+      enabled: false
+    mock:
+      interval-ms: 400
+      partial-steps: 3
+  tts:
+    provider: MOCK
+    max-text-length: 2000
+    timeout-ms: 8000
+    default-sample-rate: 8000
+    default-format: wav
+    cache-enabled: true
+    cache-ttl-seconds: 604800
+    aliyun:
+      enabled: false
+    tencent:
+      enabled: false
+    cosyvoice:
+      enabled: false
+    playback:
+      engine: noop
+
+captcha:
+  init-default-resource: false
+  local-cache-enabled: true
+
+logging:
+  level:
+    com.och: info
+
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true

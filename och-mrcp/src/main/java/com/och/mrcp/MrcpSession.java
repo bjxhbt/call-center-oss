@@ -1,0 +1,384 @@
+package com.och.mrcp;
+
+import com.alibaba.fastjson.JSONObject;
+import com.och.config.MrcpConfig;
+import com.och.engine.AsrEngine;
+import com.och.engine.EngineFactory;
+import com.och.engine.TtsCallback;
+import com.och.engine.TtsEngine;
+import com.och.exception.InvalidGrammarException;
+import com.och.sip.core.dialog.DialogManager;
+import com.och.sip.core.dialog.SipDialog;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.util.AttributeKey;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+
+@Slf4j
+@Data
+public class MrcpSession {
+
+    public static final AttributeKey<String> SESSION_ID_ATTRIBUTE_KEY = AttributeKey.valueOf("sessionId");
+
+    public enum State {INIT, CONNECTING, READY, ACTIVE, TERMINATING, CLOSED}
+
+    private final AtomicReference<State> state = new AtomicReference<>(State.INIT);
+    private final String sessionId;
+    private String callId;
+    private Instant lastActivityTime;
+    private Channel channel;
+    private final AtomicBoolean isProcessing = new AtomicBoolean(false);
+    private final AtomicInteger pendingRequests = new AtomicInteger(0);
+    private final AtomicInteger requestIdCounter = new AtomicInteger(0);
+
+
+    public MrcpSession(String sessionId) {
+        this.sessionId = sessionId;
+        transitionState(State.CONNECTING);
+        this.lastActivityTime = Instant.now();
+        startSessionTimer();
+    }
+
+
+    public void process(MrcpMessage msg) {
+        State currentState = state.get();
+        log.trace("Processing message in state {}: {}", currentState, msg.getClass().getSimpleName());
+
+        try {
+            switch (currentState) {
+                case READY:
+                    handleReadyState(msg);
+                    break;
+                case ACTIVE:
+                    handleActiveState(msg);
+                    break;
+                case TERMINATING:
+                    handleTerminatingState(msg);
+                    break;
+                case INIT:
+                case CONNECTING:
+                case CLOSED:
+                    log.warn("Received message in invalid state: {}", currentState);
+                    sendErrorResponseIfRequest(msg, 481, "Session Not Ready");
+                    break;
+                default:
+                    log.error("Unknown state: {}", currentState);
+            }
+        } catch (Exception e) {
+            log.error("Failed to process message: {}", e.getMessage());
+            sendErrorResponseIfRequest(msg, 500, "Internal Server Error");
+        }
+    }
+
+
+    /**
+     * 如果是请求消息，发送错误响应
+     */
+    private void sendErrorResponseIfRequest(MrcpMessage msg, int code, String reason) {
+        if (msg instanceof MrcpRequest) {
+            MrcpRequest req = (MrcpRequest) msg;
+            sendErrorResponse(req, code, reason);
+        }
+    }
+
+    // ================= 核心状态处理方法 =================
+
+    /**
+     * 处理READY状态消息（会话已建立，等待操作）
+     */
+    private void handleReadyState(MrcpMessage msg) {
+        if (msg instanceof MrcpResponse) {
+            MrcpResponse res = (MrcpResponse) msg;
+            if (res.getStatusCode() == 200) {
+                log.info("Session {} ready to process requests", sessionId);
+                transitionState(State.ACTIVE);
+            } else {
+                log.error("Session {} setup failed: {}", sessionId, res.getStatusCode());
+                transitionState(State.TERMINATING);
+            }
+        }
+    }
+
+    /**
+     * 处理ACTIVE状态消息（处理媒体操作请求）
+     */
+    private void handleActiveState(MrcpMessage msg) {
+        this.lastActivityTime = Instant.now();
+        if (msg instanceof MrcpRequest) {
+            MrcpRequest req = (MrcpRequest) msg;
+            pendingRequests.incrementAndGet();
+
+            try {
+                switch (req.getMethod().toUpperCase()) {
+                    case "SPEAK":
+                        handleSpeakRequest(req);
+                        break;
+                    case "RECOGNIZE":
+                        handleRecognizeRequest(req);
+                        break;
+                    case "STOP":
+                        handleStopRequest(req);
+                        break;
+                    // 新增 DEFINE-GRAMMAR 处理分支
+                    case "DEFINE-GRAMMAR":
+                        handleDefineGrammarRequest(req);
+                        break;
+                    default:
+                        sendErrorResponse(req, 405, "Method Not Allowed");
+                }
+            } finally {
+                pendingRequests.decrementAndGet();
+            }
+        } else if (msg instanceof MrcpResponse) {
+            processAsyncResponse((MrcpResponse) msg);
+        }
+    }
+
+    /**
+     * 处理TERMINATING状态消息（清理资源）
+     */
+    private void handleTerminatingState(MrcpMessage msg) {
+        if (msg instanceof MrcpRequest) {
+            // 拒绝新请求
+            sendErrorResponse((MrcpRequest) msg, 481, "Session Terminating");
+        }
+
+        if (pendingRequests.get() == 0) {
+            channel.close().addListener(future -> transitionState(State.CLOSED));
+        }
+
+    }
+
+    // ================= 具体请求处理方法 =================
+
+    /**
+     * 处理SPEAK请求（语音合成）
+     */
+    private long lastSpeakAudioBytes = 0;
+
+        private void handleSpeakRequest(MrcpRequest req) {
+        log.trace("Processing SPEAK request: {}", req.getRequestId());
+        String text = req.getBody();
+        String voice = req.getHeader("Voice-Name");
+        MrcpResponse res = buildSuccessResponse(req, "IN-PROGRESS");
+        channel.writeAndFlush(res);
+        TtsEngine ttsEngine = EngineFactory.getTtsEngine(MrcpConfig.getPlatformName());
+        ttsEngine.synthesize(text, voice, new TtsCallback() {
+            @Override
+            public void onComplete(byte[] audioData, Throwable error) {
+                if (error != null) {
+                    log.error("语音合成失败: {}", error.getMessage());
+                    sendErrorResponse(req, 500, "Internal Server Error");
+                } else {
+                    SipDialog dialog = DialogManager.getInstance().findDialogByCallId(callId);
+                    if (dialog == null || dialog.getRtpServer() == null || dialog.getRemoteRtpEndpoint() == null) {
+                        log.error("语音合成完成但无法发送音频：dialog/rtpServer/endpoint 为空，callId={}", callId);
+                        sendErrorResponse(req, 500, "RTP channel not ready");
+                        return;
+                    }
+                    log.info("语音合成成功，开始发送音频数据，callId={}", callId);
+                    // 调试：将 TTS 音频落盘为 WAV，用于直接播放验证腐讯云 TTS 质量（PCM 8k mono 16bit）
+                    try {
+                        java.io.File dir = new java.io.File("tts-debug");
+                        dir.mkdirs();
+                        java.io.File wav = new java.io.File(dir, "tts_" + System.currentTimeMillis() + ".wav");
+                        try (java.io.RandomAccessFile raf = new java.io.RandomAccessFile(wav, "rw")) {
+                            raf.writeBytes("RIFF"); raf.writeInt(Integer.reverseBytes(36 + audioData.length));
+                            raf.writeBytes("WAVEfmt "); raf.writeInt(Integer.reverseBytes(16));
+                            raf.writeShort(Short.reverseBytes((short)1)); raf.writeShort(Short.reverseBytes((short)1));
+                            raf.writeInt(Integer.reverseBytes(8000)); raf.writeInt(Integer.reverseBytes(16000));
+                            raf.writeShort(Short.reverseBytes((short)2)); raf.writeShort(Short.reverseBytes((short)16));
+                            raf.writeBytes("data"); raf.writeInt(Integer.reverseBytes(audioData.length));
+                            raf.write(audioData);
+                        }
+                        log.info("TTS 调试音频已保存: {}", wav.getAbsolutePath());
+                    } catch (Exception ex) {
+                        log.warn("保存 TTS 调试音频失败: {}", ex.getMessage());
+                    }
+                    lastSpeakAudioBytes = audioData.length;
+                    dialog.getRtpServer().sendRtpAudio(audioData, dialog.getRemoteRtpEndpoint());
+                }
+            }
+
+            @Override
+            public void onComplete(JSONObject result) {
+                // SPEAK-COMPLETE 必须在所有 RTP 音频发送完毕后才发。
+                // 否则 FS 的 mod_unimrcp 收到 COMPLETE 后会立即销毁 audio queue，
+                // 导致后台还在 pacing 发送的 RTP 没人接收，话机听不到声音。
+                // 这里延迟 = 音频时长（16bit PCM, 8kHz mono => bytes / 16000 秒）+ 200ms 余量。
+                long audioBytes = lastSpeakAudioBytes;
+                long delayMs = (audioBytes / 16) + 200; // 8000 samples/s * 2 bytes = 16000 bytes/s
+                log.info("延迟 {} ms 发送 SPEAK-COMPLETE（等待 RTP 发送完成），audioBytes={}", delayMs, audioBytes);
+                channel.eventLoop().schedule(() -> {
+                    MrcpResponse response = new MrcpResponse();
+                    response.setVersion(req.getVersion());
+                    response.setMethod("SPEAK-COMPLETE");
+                    response.setRequestId(req.getRequestId());
+                    response.setRequestState("COMPLETE");
+                    response.addHeader("Channel-Identifier", getSessionId());
+                    response.addHeader("Completion-Cause", "000 success");
+                    response.addHeader("Content-Type", "application/json");
+                    channel.writeAndFlush(response);
+                }, delayMs, java.util.concurrent.TimeUnit.MILLISECONDS);
+            }
+        });
+    }
+
+    /**
+     * 处理RECOGNIZE请求（语音识别）
+     */
+    private void handleRecognizeRequest(MrcpRequest req) {
+        log.trace("Processing RECOGNIZE request: {}", req.getRequestId());
+        // 1. 提交到ASR引擎（异步操作）
+        MrcpResponse res = buildSuccessResponse(req, "IN-PROGRESS");
+        channel.writeAndFlush(res);
+        AsrEngine asrEngine = EngineFactory.getAsrEngine(MrcpConfig.getPlatformName());
+        asrEngine.start(req, this);
+    }
+
+    /**
+     * 构建标准化的 MRCP 成功响应
+     *
+     * @param req 原始 MRCP 请求对象
+     * @return 预置状态码和基础头部的成功响应对象
+     */
+    private MrcpResponse buildSuccessResponse(MrcpRequest req, String statusText) {
+        MrcpResponse response = new MrcpResponse();
+        response.setVersion(req.getVersion());
+        response.setMessageLength(-1);
+        response.setRequestId(req.getRequestId());
+        response.setRequestState(statusText);
+        response.setStatusCode(200);
+        response.addHeader("Completion-Cause", "000 normal");
+        response.addHeader("Channel-Identifier", this.sessionId);
+        return response;
+    }
+
+
+    /**
+     * 处理STOP请求（终止当前操作）
+     */
+    private void handleStopRequest(MrcpRequest req) {
+        MrcpResponse res = new MrcpResponse();
+        res.setVersion(req.getVersion());
+        res.setRequestId(req.getRequestId());
+        res.setStatusCode(200);
+        res.addHeader("Completion-Cause", "001 stop");
+        channel.writeAndFlush(res);
+    }
+
+    /**
+     * 处理 DEFINE-GRAMMAR 请求
+     */
+    private void handleDefineGrammarRequest(MrcpRequest req) {
+        log.info("Processing DEFINE-GRAMMAR request: {}", req.getRequestId());
+
+        try {
+            // 1. 解析语法内容（SRGS XML）
+            String grammarXml = req.getBody();
+            //validateGrammar(grammarXml); // 语法验证逻辑
+
+            // 2. 存储语法（示例：关联到当前会话）
+            String grammarId = req.getHeader("Content-Id");
+            if (grammarId == null) {
+                grammarId = "grammar-" + System.currentTimeMillis();
+            }
+            GrammarManager.storeGrammar(sessionId, grammarId, grammarXml);
+
+            // 3. 发送成功响应
+            MrcpResponse res = buildSuccessResponse(req, "COMPLETE");
+            res.addHeader("Content-Id", grammarId); // 返回存储的语法ID
+            channel.writeAndFlush(res);
+        } catch (InvalidGrammarException e) {
+            log.error("Invalid grammar: {}", e.getMessage());
+            sendErrorResponse(req, 400, "Bad Request: Invalid Grammar");
+        } catch (Exception e) {
+            log.error("Failed to process DEFINE-GRAMMAR: {}", e.getMessage());
+            sendErrorResponse(req, 500, "Internal Server Error");
+        }
+    }
+
+
+    /**
+     * 验证语法格式（示例：简单检查是否为有效 XML）
+     */
+    private void validateGrammar(String grammarXml) throws InvalidGrammarException {
+        if (grammarXml == null || !grammarXml.contains("<grammar")) {
+            throw new InvalidGrammarException("Invalid SRGS grammar format");
+        }
+    }
+
+    // ================= 工具方法 =================
+
+    /**
+     * 发送错误响应
+     */
+    private void sendErrorResponse(MrcpRequest req, int code, String reason) {
+        MrcpResponse response = new MrcpResponse();
+        response.setVersion(req.getVersion());
+        response.setMessageLength(reason.length());
+        response.setRequestId(req.getRequestId());
+        response.setRequestState("COMPLETE");
+        response.setStatusCode(code);
+        response.addHeader("Completion-Cause", "002 error");
+        response.addHeader("Channel-Identifier", this.sessionId);
+        response.addHeader("Content-Length", String.valueOf(reason.length()));
+        response.setBody(reason);
+        channel.writeAndFlush(response);
+    }
+
+    /**
+     * 状态转换（线程安全）
+     */
+    protected synchronized void transitionState(State newState) {
+        log.debug("Session {} state transition: {} -> {}", sessionId, state, newState);
+        state.set(newState);
+        if (newState == State.TERMINATING) {
+            // 触发终止流程
+            handleTerminatingState(null);
+        }
+    }
+
+
+    /**
+     * 处理异步响应（例如来自TTS/ASR引擎的异步结果）
+     *
+     * @param response MRCP响应消息
+     */
+    private void processAsyncResponse(MrcpResponse response) {
+        AsrEngine asrEngine = EngineFactory.getAsrEngine(MrcpConfig.getPlatformName());
+        asrEngine.end();
+        channel.writeAndFlush(response);
+    }
+
+
+    private void startSessionTimer() {
+        new Thread(() -> {
+            while (true) {
+                if (Duration.between(lastActivityTime, Instant.now()).compareTo(MrcpConfig.getSessionTimeout()) > 0) {
+                    close();
+                    break;
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }).start();
+    }
+
+    public void close() {
+        if (state.get() != State.CLOSED) {
+            transitionState(State.CLOSED);
+        }
+    }
+
+}

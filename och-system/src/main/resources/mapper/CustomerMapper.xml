@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.och.system.mapper.CustomerMapper">
+
+    <resultMap type="com.och.system.domain.entity.Customer" id="CustomerResult">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="customerNo" column="customer_no" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="backupPhone" column="backup_phone" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="INTEGER"/>
+        <result property="source" column="source" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="lastCallRecordId" column="last_call_record_id" jdbcType="INTEGER"/>
+        <result property="lastCallTime" column="last_call_time" jdbcType="TIMESTAMP"/>
+        <result property="callCount" column="call_count" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="getPageList" parameterType="com.och.system.domain.query.customer.CustomerQuery"
+            resultType="com.och.system.domain.vo.customer.CustomerVo">
+        select id, customer_no, name, phone, backup_phone, gender, source, status, remark,
+               last_call_record_id, last_call_time, call_count, create_time
+        from customer
+        <where>
+            del_flag = 0
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="ids != null and ids.size() > 0">
+                and id in
+                <foreach collection="ids" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="customerNo != null and customerNo != ''">
+                and customer_no = #{customerNo}
+            </if>
+            <if test="name != null and name != ''">
+                and name like '%' || #{name} || '%'
+            </if>
+            <if test="phone != null and phone != ''">
+                and (phone = #{phone} or backup_phone = #{phone})
+            </if>
+            <if test="gender != null">
+                and gender = #{gender}
+            </if>
+            <if test="source != null">
+                and source = #{source}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="getDetail" parameterType="java.lang.Long" resultType="com.och.system.domain.vo.customer.CustomerVo">
+        select id, customer_no, name, phone, backup_phone, gender, source, status, remark,
+               last_call_record_id, last_call_time, call_count, create_time
+        from customer
+        where id = #{id} and del_flag = 0
+    </select>
+
+</mapper>

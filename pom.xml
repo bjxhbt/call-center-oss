@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.3</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.och</groupId>
+    <artifactId>openCallHub</artifactId>
+    <version>0.0.1</version>
+    <name>openCallHub</name>
+    <description>openCallHub</description>
+
+
+    <properties>
+        <java.version>17</java.version>
+        <spring-boot.version>3.5.3</spring-boot.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <springdoc.version>2.8.9</springdoc.version>
+        <fastjson.version>2.0.57</fastjson.version>
+        <pagehelper.boot.version>2.0.0</pagehelper.boot.version>
+        <amqp.version>3.1.6</amqp.version>
+        <druid.version>1.2.21</druid.version>
+        <kingbase8.version>8.6.0</kingbase8.version>
+        <mysql.version>9.5.0</mysql.version>
+        <hutool.version>5.8.21</hutool.version>
+        <forest.version>1.6.4</forest.version>
+        <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
+        <jedis.version>6.0.0</jedis.version>
+        <jackson.version>2.17.2</jackson.version>
+        <lombok.version>1.18.32</lombok.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <freeswitch-esl.version>0.9.2</freeswitch-esl.version>
+        <spring-data-redis.version>3.5.2</spring-data-redis.version>
+        <commons.lang3.version>3.14.0</commons.lang3.version>
+        <commons.io.version>2.19.0</commons.io.version>
+        <jwt.version>4.4.0</jwt.version>
+        <security-crypto.version>6.3.1</security-crypto.version>
+        <dom4j.version>2.1.4</dom4j.version>
+        <aliyun-sdk-oss.version>3.18.1</aliyun-sdk-oss.version>
+        <aliyun-sdk-tts.version>2.2.17</aliyun-sdk-tts.version>
+        <qclod-sdk-tts.version>3.1.1171</qclod-sdk-tts.version>
+        <cos-qcloud.version>5.6.155</cos-qcloud.version>
+        <tianai-captcha.version>1.5.1</tianai-captcha.version>
+        <spring-statemachine.version>4.0.0</spring-statemachine.version>
+        <netty.version>4.1.105.Final</netty.version>
+        <spring-ai-alibaba.version>1.0.0-M6.1</spring-ai-alibaba.version>
+        <easy-excel.version>4.0.3</easy-excel.version>
+        <spring.quartz.version>3.5.3</spring.quartz.version>
+        <redisson.version>3.49.0</redisson.version>
+        <log4j2.version>2.23.1</log4j2.version>
+        <och-common.version>1.0.1</och-common.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--邮件发送-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-mail</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.statemachine</groupId>
+                <artifactId>spring-statemachine-starter</artifactId>
+                <version>${spring-statemachine.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.statemachine</groupId>
+                <artifactId>spring-statemachine-data-redis</artifactId>
+                <version>${spring-statemachine.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <optional>true</optional>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!--数据库依赖-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jdbc</artifactId>
+            </dependency>
+
+            <!--阿里数据库连接池-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <!--人大金仓驱动-->
+            <dependency>
+                <groupId>cn.com.kingbase</groupId>
+                <artifactId>kingbase8</artifactId>
+                <version>${kingbase8.version}</version>
+            </dependency>
+
+            <!--Mybatis-Plus-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!--springdoc依赖-->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+
+            <!--fastjson依赖-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <!-- pagehelper 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.boot.version}</version>
+            </dependency>
+
+
+            <!-- rabbitmq依赖-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-amqp</artifactId>
+            </dependency>
+
+            <!--forest依赖(HTTP对外请求框架)-->
+            <dependency>
+                <groupId>com.dtflys.forest</groupId>
+                <artifactId>forest-spring-boot3-starter</artifactId>
+                <version>${forest.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <!-- 线程传递值 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${transmittable-thread-local.version}</version>
+            </dependency>
+
+
+            <!--  xml 格式处理 -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <!-- JSON工具类 -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <!--动态添加属性和方法开始-->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
+            </dependency>
+
+            <!--freeswitchESL-->
+            <dependency>
+                <groupId>org.freeswitch.esl.client</groupId>
+                <artifactId>org.freeswitch.esl.client</artifactId>
+                <version>${freeswitch-esl.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <version>${spring-data-redis.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-to-slf4j</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons.lang3.version}</version>
+            </dependency>
+            <!--io常用工具类 -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
+
+            <!--引入jwt-->
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-crypto</artifactId>
+                <version>${security-crypto.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>${dom4j.version}</version>
+            </dependency>
+            <!--阿里云储存-->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun-sdk-oss.version}</version>
+            </dependency>
+            <!--腾讯云储存-->
+            <dependency>
+                <groupId>com.qcloud</groupId>
+                <artifactId>cos_api</artifactId>
+                <version>${cos-qcloud.version}</version>
+            </dependency>
+            <!-- 基于 JAVA实现的行为验证码 -->
+            <dependency>
+                <groupId>cloud.tianai.captcha</groupId>
+                <artifactId>tianai-captcha</artifactId>
+                <version>${tianai-captcha.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+            <!--tts-->
+            <dependency>
+                <groupId>com.alibaba.nls</groupId>
+                <artifactId>nls-sdk-tts</artifactId>
+                <!-- 请将 'the-latest-version' 替换为查询到的最新版本号：https://mvnrepository.com/artifact/com.alibaba.nls/nls-sdk-tts -->
+                <version>${aliyun-sdk-tts.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tencentcloudapi</groupId>
+                <artifactId>tencentcloud-sdk-java-tts</artifactId>
+                <!-- 请到 maven 官网查询 sdk 的所有版本，例如 cvm 的产品包链接为 https://central.sonatype.com/artifact/com.tencentcloudapi/tencentcloud-sdk-java-tts/versions -->
+                <version>${qclod-sdk-tts.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.alibaba.cloud.ai</groupId>
+                <artifactId>spring-ai-alibaba-starter</artifactId>
+                <version>${spring-ai-alibaba.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easy-excel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-quartz</artifactId>
+                <version>${spring.quartz.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.sxwdmjy</groupId>
+                <artifactId>och-common</artifactId>
+                <version>${och-common.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>och-security</module>
+        <module>och-system</module>
+        <module>och-api</module>
+        <module>och-esl</module>
+        <module>och-file</module>
+        <module>och-websocket</module>
+        <module>och-ivr</module>
+        <module>och-mrcp</module>
+        <module>och-file-client</module>
+        <module>och-ai</module>
+        <module>och-call-task</module>
+    </modules>
+
+    <!--项目本身的jar从指定镜像下载-->
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>public</id>-->
+<!--            <name>aliyun nexus</name>-->
+<!--            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--        </repository>-->
+<!--    </repositories>-->
+
+    <!--maven相关打包编译等操作配置了以后从当前指定仓库下载-->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>
