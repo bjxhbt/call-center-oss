@@ -18,8 +18,8 @@
     },
     {
       "path": "README.md",
-      "source_sha256": "daf5175a3f955f38272388a52f8ebeb424a2db2d2f533e918c601bbcba3fe5aa",
-      "export_sha256": "daf5175a3f955f38272388a52f8ebeb424a2db2d2f533e918c601bbcba3fe5aa"
+      "source_sha256": "b2c87b9701acaf3521e73766b70b134e040439643bc3334cd44ba8f2db9fa927",
+      "export_sha256": "b2c87b9701acaf3521e73766b70b134e040439643bc3334cd44ba8f2db9fa927"
     },
     {
       "path": "deploy/demo/.dockerignore",
