@@ -13,7 +13,7 @@ import {
   TeamOutlined
 } from '@ant-design/icons-vue'
 import { getActiveCalls, getAgentStatusList, getOverview } from '@/apis/callingConfigure/monitor'
-import { applicationName } from '@/consts/branding'
+import { applicationTitle } from '@/consts/branding'
 import { allSettledCompat } from '@/utils/browserCompat'
 
 type DashboardResponse = {
@@ -171,7 +171,7 @@ onBeforeUnmount(() => {
   <div class="overview-page">
     <section class="overview-hero" aria-labelledby="overview-title">
       <div>
-        <div class="product-name">{{ applicationName }}</div>
+        <div class="product-name">{{ applicationTitle }}</div>
         <h1 id="overview-title">呼叫中心运行工作台</h1>
         <p>统一承载电话接入、坐席服务、任务调度与智能语音能力。</p>
       </div>

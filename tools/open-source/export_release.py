@@ -91,19 +91,20 @@ def export(root, output, frontend=None, database="kingbase"):
     modules = [item.text for item in ET.parse(root / "pom.xml").findall(
         "{http://maven.apache.org/POM/4.0.0}modules/{http://maven.apache.org/POM/4.0.0}module")]
     inputs = {}
-    for name in ("pom.xml", "LICENSE", "NOTICE.md", ".gitignore"):
+    for name in ("pom.xml", "LICENSE", ".gitignore"):
         inputs[name] = root / name
     for module in modules:
         inputs[f"{module}/pom.xml"] = root / module / "pom.xml"
         for path in (root / module / "src").rglob("*"):
             if path.is_file():
                 inputs[path.relative_to(root).as_posix()] = path
-    for directory in ("docs/open-source", "deploy/public", "deploy/demo", "examples/public-demo", "tools/open-source"):
+    for directory in ("assets", "deploy/public", "deploy/demo", "examples/public-demo", "tools/open-source"):
         for path in (root / directory).rglob("*"):
             if (path.is_file() and "__pycache__" not in path.parts and "local" not in path.relative_to(root / directory).parts
                     and not ("freeswitch/upstream/" in path.as_posix() and path.name.endswith('.tar.gz'))):
                 inputs[path.relative_to(root).as_posix()] = path
-    inputs["README.md"] = root / "docs/open-source/RELEASE_README.md"
+    readme_template = root / "docs/open-source/RELEASE_README.md"
+    inputs["README.md"] = readme_template if readme_template.is_file() else root / "README.md"
     replacements = {
         "och-api/src/main/resources/application.yml": "application.yml",
         "och-file-client/src/main/resources/application.yml": "file-client.yml",
@@ -123,7 +124,7 @@ def export(root, output, frontend=None, database="kingbase"):
                 if path.is_file():
                     inputs["frontend/" + path.relative_to(frontend).as_posix()] = path
         for path in frontend.iterdir():
-            if path.is_file() and (path.name in {"LICENSE", "README.md", "index.html", "package.json", "package-lock.json",
+            if path.is_file() and (path.name in {"LICENSE", "index.html", "package.json", "package-lock.json",
                                                 "pnpm-lock.yaml", "env.d.ts", ".gitignore", ".prettierrc.json", ".eslintrc.cjs"}
                                    or path.name.startswith("tsconfig") or path.name == "vite.config.ts"):
                 inputs["frontend/" + path.name] = path
@@ -132,7 +133,7 @@ def export(root, output, frontend=None, database="kingbase"):
     stage = output / "source"
     records, transformed, findings, generated, test_credentials, excluded = [], [], [], [], [], []
     for relative, source in sorted(inputs.items()):
-        if source.suffix.lower() in BACKUP_SUFFIXES or relative == "docs/open-source/RELEASE_README.md":
+        if source.suffix.lower() in BACKUP_SUFFIXES or (source.suffix.lower() == ".md" and relative != "README.md"):
             excluded.append(relative)
             continue
         if source.is_symlink() or not source.is_file():

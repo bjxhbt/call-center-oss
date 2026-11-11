@@ -19,8 +19,8 @@ def verify(archive):
         files = {item["path"]: item for item in manifest["files"]}
         if set(names) != set(files) | {"source-manifest.json", "SHA256SUMS"}:
             raise ValueError("Manifest and archive file lists differ")
-        required = {"README.md", "LICENSE", "NOTICE.md", "deploy/public/00-init.sql",
-                    "deploy/public/application.yml", "docs/open-source/quickstart.md"}
+        required = {"README.md", "LICENSE", "deploy/public/00-init.sql",
+                    "deploy/public/application.yml"}
         if manifest["frontend_included"]:
             required |= {"frontend/LICENSE", "frontend/package-lock.json", "frontend/package.json"}
         if not required.issubset(names):

@@ -4,7 +4,7 @@
       <div class="logo" :class="{ 'logo-collapsed': state.collapsed }">
         <img class="logo-mark" :src="logoUrl" width="38" height="38" alt="" aria-hidden="true" />
         <div v-if="!state.collapsed" class="logo-copy">
-          <strong>{{ applicationName }}</strong>
+          <strong>{{ applicationTitle }}</strong>
           <span>呼叫中心管理系统</span>
         </div>
       </div>
@@ -159,7 +159,7 @@ import SoftPhone from '@/components/SoftPhone.vue'
 import IncomingCallScreen from '@/components/IncomingCallScreen.vue'
 import WorkOrderModal from '@/components/workOrder/WorkOrderModal.vue'
 import { initWebsocketClient, onIncomingCall } from '@/components/WebSocketClient'
-import { applicationName } from '@/consts/branding'
+import { applicationTitle } from '@/consts/branding'
 import logoUrl from '@/assets/logo.svg'
 const mode = ref<TabsProps['tabPosition']>('top')
 const state = reactive({

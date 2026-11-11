@@ -27,7 +27,7 @@ def check(base, output):
                     pass
         page.on('response',response)
         page.goto(base+'/login',wait_until='networkidle')
-        assert page.title()=='信恒博通 呼叫中心',page.title()
+        assert page.title()=='信恒知枢·呼叫中心',page.title()
         assert '科学技术部' not in page.locator('body').inner_text()
         page.screenshot(path=str(output/'login-desktop.png'),full_page=True)
         page.get_by_placeholder('请输入账号').fill('admin')

@@ -1,8 +1,8 @@
-# 信恒博通呼叫中心
+# 信恒知枢·呼叫中心
 
 **Call Center OSS · 让电话流程连接业务，让语音能力可以自由扩展。**
 
-信恒博通呼叫中心是一个面向企业客户联络场景的开源项目，基于 **Java 17、Spring Boot 3、Vue 3 和 FreeSWITCH** 构建，提供坐席、技能组、IVR、客户、工单与语音服务等功能，支持私有化部署。
+信恒知枢·呼叫中心是一个面向企业客户联络场景的开源项目，基于 **Java 17、Spring Boot 3、Vue 3 和 FreeSWITCH** 构建，提供坐席、技能组、IVR、客户、工单与语音服务等功能，支持私有化部署。
 
 我们基于 [OpenCallHub](https://github.com/sxwdmjy/openCallHub) 持续维护和扩展这个项目，重点补充业务流程编排、通话转写、语音引擎适配和部署工具。希望开发者拿到代码后，能够理解一次电话如何流转、业务规则在哪里执行，以及如何接入自己的系统。
 
@@ -31,7 +31,11 @@
 
 语音模块包含腾讯云、阿里云、FunASR、CosyVoice 等适配实现。业务层通过统一的 ASR/TTS 接口调用，便于根据语言、成本和部署要求选择引擎；真实语音服务需要配置对应的凭证或本地服务地址。
 
-![信恒博通呼叫中心界面](docs/open-source/assets/software-introduction/home.png)
+![信恒知枢·呼叫中心工作台](assets/screenshots/home.png)
+
+![信恒知枢·呼叫中心登录页](assets/screenshots/login.png)
+
+图片使用本地演示数据展示界面。
 
 ## 技术架构
 
@@ -229,3 +233,13 @@ java -jar och-api/target/och-api-0.0.1.jar \
 感谢 [OpenCallHub](https://github.com/sxwdmjy/openCallHub) 及其贡献者提供的基础，也感谢 FreeSWITCH 和相关开源社区。
 
 后端遵循仓库中的 [GNU GPLv3](LICENSE)；配套前端保留其 [Apache-2.0 许可证](frontend/LICENSE)。`och-common` 及其他第三方组件遵守各自许可证，原有作者与版权声明继续保留。使用、修改和分发时，请履行适用的开源许可义务。
+
+本项目的来源与第三方说明集中如下：
+
+- 后端基于 OpenCallHub 维护和扩展，前端来源为 [waihu-app](https://gitee.com/zhongjiawei999/waihu-app)，保留各自作者、版权和许可证信息。
+- 公共依赖 `io.github.sxwdmjy:och-common:1.0.1` 的发布 POM 声明 GPL-3.0-only，运行包与源码包均可从 Maven Central 获取。
+- Kingbase JDBC 使用 `cn.com.kingbase:kingbase8:8.6.0`，发布 POM 声明 Apache-2.0；数据库服务端另行准备。
+- FreeSWITCH、Sofia-SIP、libks、SpanDSP 等组件遵守各自许可证。容器构建按固定版本获取源码并校验 SHA-256，上游许可证随其源码保留。
+- 前端铃声为数学合成的 PCM 提示音；其他界面素材沿用其工程来源与适用许可证，使用时应确认素材的授权范围。
+- 本项目从维护工作区导入，未包含完整的上游 Git 派生历史。对上游文件的比对只用于说明维护差异，不作为作者归属或准确派生起点的证明。
+- GPLv3 允许商业使用和收费分发，使用者仍需履行源码提供、许可证保留等适用义务。上游旧说明中关于“GPL 不允许商用”的表述已按许可证本文纠正；该纠正不代表上游提供额外商业授权，也不改变第三方组件的许可。

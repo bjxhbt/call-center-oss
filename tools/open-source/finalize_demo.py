@@ -86,11 +86,11 @@ def finalize(stage, private_yaml=None, include_private_env=None, redis_database=
         scan(relative.as_posix(),file.read_bytes())
     if findings:
         raise ValueError('Private configuration value found in: '+', '.join(findings))
-    required=['app/och-api.jar','web/index.html','docker/compose.yml','docker/Dockerfile','DOCKER.md','VALIDATION.md',
+    required=['app/och-api.jar','web/index.html','docker/compose.yml','docker/Dockerfile','README.md',
               'database/01-schema.sql','database/02-seed.sql','source/OpenCallHub-public-source.zip']
     if include_private_env:
-        required+=['docker/freeswitch/Dockerfile','docker/freeswitch/entrypoint.py','tools/DemoFreeSwitch.java','PRIVATE-DEPLOYMENT.md']
-        if set(settings) & storage_keys: required+=['tools/DemoObjectStorage.java','RUSTFS.md']
+        required+=['docker/freeswitch/Dockerfile','docker/freeswitch/entrypoint.py','tools/DemoFreeSwitch.java']
+        if set(settings) & storage_keys: required+=['tools/DemoObjectStorage.java']
     for name in required:
         if not (stage/name).is_file(): raise ValueError('Missing release file: '+name)
     if include_private_env:
@@ -102,8 +102,8 @@ def finalize(stage, private_yaml=None, include_private_env=None, redis_database=
     nested=stage/'source/SHA256SUMS'
     sums+=hashlib.sha256(nested.read_bytes()).hexdigest()+'  source/SHA256SUMS\n'
     (stage/'SHA256SUMS').write_text(sums,encoding='utf-8')
-    archive=stage.parent/(f'XinhengBotong-MySQL-FreeSWITCH-Docker-Private-{release_date}.zip' if include_private_env
-                          else f'XinhengBotong-MySQL-Docker-Demo-{release_date}.zip')
+    archive=stage.parent/(f'XinhengZhishu-MySQL-FreeSWITCH-Docker-Private-{release_date}.zip' if include_private_env
+                          else f'XinhengZhishu-MySQL-Docker-Demo-{release_date}.zip')
     if archive.exists(): raise ValueError('Refusing to overwrite an existing release archive')
     with zipfile.ZipFile(archive,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as bundle:
         for file in sorted(stage.rglob('*')):

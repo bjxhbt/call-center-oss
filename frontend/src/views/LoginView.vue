@@ -13,7 +13,7 @@ import {
 import { message } from 'ant-design-vue'
 import { handleLogin } from '@/apis/login'
 import { getLoginInfo, setLoginInfo, setToken } from '@/utils/local'
-import { applicationName, applicationTitle } from '@/consts/branding'
+import { applicationTitle } from '@/consts/branding'
 import logoUrl from '@/assets/logo.svg'
 
 interface FormState {
@@ -88,7 +88,7 @@ const login = async () => {
       <div class="brand-header">
         <img class="brand-mark" :src="logoUrl" width="42" height="42" alt="" aria-hidden="true" />
         <div>
-          <strong>{{ applicationName }}</strong>
+          <strong>{{ applicationTitle }}</strong>
           <span>呼叫中心</span>
         </div>
       </div>

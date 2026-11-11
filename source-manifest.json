@@ -12,14 +12,19 @@
       "export_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
     },
     {
-      "path": "NOTICE.md",
-      "source_sha256": "8cc9ea4523d96eaf5b03be4b4c51a10cd57a9daebb2f058b3c57898676c01331",
-      "export_sha256": "8cc9ea4523d96eaf5b03be4b4c51a10cd57a9daebb2f058b3c57898676c01331"
+      "path": "README.md",
+      "source_sha256": "069f8675bb49fc4032493a2dd9c32323bb15ebd5c9903b9438f547ccfcc52eb4",
+      "export_sha256": "069f8675bb49fc4032493a2dd9c32323bb15ebd5c9903b9438f547ccfcc52eb4"
     },
     {
-      "path": "README.md",
-      "source_sha256": "b2c87b9701acaf3521e73766b70b134e040439643bc3334cd44ba8f2db9fa927",
-      "export_sha256": "b2c87b9701acaf3521e73766b70b134e040439643bc3334cd44ba8f2db9fa927"
+      "path": "assets/screenshots/home.png",
+      "source_sha256": "f23de6de74ebcc1eb366b0d5e9a0b516e5a649ca5ae5cd24a891a4713cfa58a8",
+      "export_sha256": "f23de6de74ebcc1eb366b0d5e9a0b516e5a649ca5ae5cd24a891a4713cfa58a8"
+    },
+    {
+      "path": "assets/screenshots/login.png",
+      "source_sha256": "3971d3c242f288629f584491c72e1bf6cbb562f3544d7eb598b3860effae53ae",
+      "export_sha256": "3971d3c242f288629f584491c72e1bf6cbb562f3544d7eb598b3860effae53ae"
     },
     {
       "path": "deploy/demo/.dockerignore",
@@ -30,36 +35,6 @@
       "path": "deploy/demo/.gitignore",
       "source_sha256": "f46c8c7b5408f68ba15eabaed46b3facb5359db1a946b1f3b274ca76a874f581",
       "export_sha256": "f46c8c7b5408f68ba15eabaed46b3facb5359db1a946b1f3b274ca76a874f581"
-    },
-    {
-      "path": "deploy/demo/DOCKER.md",
-      "source_sha256": "5b2795c9bd3cd063f5277cb4faecd98e56c09cde75cb6b594ce0f9865227829e",
-      "export_sha256": "5b2795c9bd3cd063f5277cb4faecd98e56c09cde75cb6b594ce0f9865227829e"
-    },
-    {
-      "path": "deploy/demo/FREESWITCH-DOCKER.md",
-      "source_sha256": "a5d040f02265c6341abf52d6eaf1c66510cd604e51eb7aa1feda138690464fab",
-      "export_sha256": "a5d040f02265c6341abf52d6eaf1c66510cd604e51eb7aa1feda138690464fab"
-    },
-    {
-      "path": "deploy/demo/PRIVATE-DEPLOYMENT.md",
-      "source_sha256": "455ea5c3f10db2e0099a08b9e220952a61fe10ce592c5e7284699c63c11a3061",
-      "export_sha256": "455ea5c3f10db2e0099a08b9e220952a61fe10ce592c5e7284699c63c11a3061"
-    },
-    {
-      "path": "deploy/demo/README.md",
-      "source_sha256": "56d55ac2affd7cb05eafc533f3e7cbe49e40889ac03669b9260fa1acaddb6d7e",
-      "export_sha256": "56d55ac2affd7cb05eafc533f3e7cbe49e40889ac03669b9260fa1acaddb6d7e"
-    },
-    {
-      "path": "deploy/demo/RUSTFS.md",
-      "source_sha256": "c47aca0faa9060b7bb727f4cf4a4e8ffbd0ac1e20d79968a3e185bd9bcc7b90a",
-      "export_sha256": "c47aca0faa9060b7bb727f4cf4a4e8ffbd0ac1e20d79968a3e185bd9bcc7b90a"
-    },
-    {
-      "path": "deploy/demo/VALIDATION.md",
-      "source_sha256": "bb0e3422e25bf807153696d2dc2f49e559a487e4bf674eccb18d8f03bbe38075",
-      "export_sha256": "bb0e3422e25bf807153696d2dc2f49e559a487e4bf674eccb18d8f03bbe38075"
     },
     {
       "path": "deploy/demo/config/application.yml",
@@ -108,8 +83,8 @@
     },
     {
       "path": "deploy/demo/docker/compose.yml",
-      "source_sha256": "d049c7933fc7e387af2d1cf47979ea0ac0dd27e8b60e27b8ac0d1e5d228643fa",
-      "export_sha256": "d049c7933fc7e387af2d1cf47979ea0ac0dd27e8b60e27b8ac0d1e5d228643fa"
+      "source_sha256": "fb698c86d25d2076da513d7f6c887a70a32203261fb2532625f67875ea3260ed",
+      "export_sha256": "fb698c86d25d2076da513d7f6c887a70a32203261fb2532625f67875ea3260ed"
     },
     {
       "path": "deploy/demo/docker/freeswitch/.dockerignore",
@@ -132,9 +107,9 @@
       "export_sha256": "e583b34ac737e485ca794398e9229807e53e1fbbe5a7a2e25486c26e4ca26e09"
     },
     {
-      "path": "deploy/demo/docker/freeswitch/upstream/README.md",
-      "source_sha256": "78554e67a11d7e4bc8fe000275442437825bb314fe5634f27f10842c9d6598ed",
-      "export_sha256": "78554e67a11d7e4bc8fe000275442437825bb314fe5634f27f10842c9d6598ed"
+      "path": "deploy/demo/docker/freeswitch/upstream/.gitkeep",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "export_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "path": "deploy/demo/docker/nginx-host.conf",
@@ -233,12 +208,12 @@
     },
     {
       "path": "deploy/public/01-schema.sql",
-      "source_sha256": "f4688d548f02c0da3fef1e57571a66332d0d7cf30479bef0acd51796853f75c5",
+      "source_sha256": "a5f8432c3cbcfead04a9dba6b3309c4a92898009c79b281e591441b7de080fab",
       "export_sha256": "a5f8432c3cbcfead04a9dba6b3309c4a92898009c79b281e591441b7de080fab"
     },
     {
       "path": "deploy/public/02-upgrade.sql",
-      "source_sha256": "337d29abf7ff76d6c2b940bc2fede857c4e10501c1e818f8493e090229fccd78",
+      "source_sha256": "73b7d954787a19ce243c2be297896cb9d92d10091265f89c3d8ba434f820814a",
       "export_sha256": "73b7d954787a19ce243c2be297896cb9d92d10091265f89c3d8ba434f820814a"
     },
     {
@@ -248,7 +223,7 @@
     },
     {
       "path": "deploy/public/04-menus.sql",
-      "source_sha256": "be7aeb32ed009e6275c5a46776dfe64d80021fd78faf58d5b4f5cc39cb7708d5",
+      "source_sha256": "3be45632c9b0bb6936d36d1325a1d616910de8a689daadfd576540c30157b54f",
       "export_sha256": "3be45632c9b0bb6936d36d1325a1d616910de8a689daadfd576540c30157b54f"
     },
     {
@@ -280,66 +255,6 @@
       "path": "deploy/public/mrcp.conf",
       "source_sha256": "c235af6c13d0b2ee411a39684627a50684ee92839a4c7eaddfb7d133715fd9b7",
       "export_sha256": "c235af6c13d0b2ee411a39684627a50684ee92839a4c7eaddfb7d133715fd9b7"
-    },
-    {
-      "path": "docs/open-source/README.md",
-      "source_sha256": "b4358edb70403fcc800a330253751999bbfcb14b7ae6efe491203f60e66572a9",
-      "export_sha256": "b4358edb70403fcc800a330253751999bbfcb14b7ae6efe491203f60e66572a9"
-    },
-    {
-      "path": "docs/open-source/asr-evaluation.md",
-      "source_sha256": "c4c69ddc470364767c054cd4106c51fcac4ab0aaca5f70c995f650456c2ec302",
-      "export_sha256": "c4c69ddc470364767c054cd4106c51fcac4ab0aaca5f70c995f650456c2ec302"
-    },
-    {
-      "path": "docs/open-source/assets/software-introduction/home.png",
-      "source_sha256": "b39b2d63371e25b07529c6a5263e03f7da054e6815a988e7a071ffe1af9673a7",
-      "export_sha256": "b39b2d63371e25b07529c6a5263e03f7da054e6815a988e7a071ffe1af9673a7"
-    },
-    {
-      "path": "docs/open-source/dependencies.md",
-      "source_sha256": "2a3e5cde250838db8d6835bc0ed822754666956e62bbde29b74520ffc4ceb639",
-      "export_sha256": "2a3e5cde250838db8d6835bc0ed822754666956e62bbde29b74520ffc4ceb639"
-    },
-    {
-      "path": "docs/open-source/provenance.md",
-      "source_sha256": "2b7f0fb8fdd5ac733620d83ece92591524108c3a3ec047b0bb7a1123b847be23",
-      "export_sha256": "2b7f0fb8fdd5ac733620d83ece92591524108c3a3ec047b0bb7a1123b847be23"
-    },
-    {
-      "path": "docs/open-source/quickstart.md",
-      "source_sha256": "e7c1d964fa8752ea2c90444cae3e31a3c3b40d031a71dacefcfe4c6bc40088ff",
-      "export_sha256": "e7c1d964fa8752ea2c90444cae3e31a3c3b40d031a71dacefcfe4c6bc40088ff"
-    },
-    {
-      "path": "docs/open-source/release.md",
-      "source_sha256": "cc210f17beb078b463b5eca09d9b34011d2b36202aaac6b8cd29a2edf8da5538",
-      "export_sha256": "cc210f17beb078b463b5eca09d9b34011d2b36202aaac6b8cd29a2edf8da5538"
-    },
-    {
-      "path": "docs/open-source/upstream-diff.json",
-      "source_sha256": "3a29afb54a59b4ddb96bd52b6dc63276962a9b01fd24f12fb64367f23969abee",
-      "export_sha256": "a6b527b2614ae64accd0bc1efc4bf783d498f6ae9436dfdecb64f99ade643af8"
-    },
-    {
-      "path": "docs/open-source/verification.md",
-      "source_sha256": "dd9c3e7dbd368d58e9cbc23f2d24f9eeb0b038a7bcf4ba6d44b60d01bf1575af",
-      "export_sha256": "dd9c3e7dbd368d58e9cbc23f2d24f9eeb0b038a7bcf4ba6d44b60d01bf1575af"
-    },
-    {
-      "path": "docs/open-source/\u547c\u53eb\u4e2d\u5fc3\u8f6f\u4ef6\u4ecb\u7ecd.md",
-      "source_sha256": "d78cc73c78cbd3d28dbcbe93fba2fc0de56c623118044db4fb81c35f67963b8a",
-      "export_sha256": "d78cc73c78cbd3d28dbcbe93fba2fc0de56c623118044db4fb81c35f67963b8a"
-    },
-    {
-      "path": "examples/public-demo/README.md",
-      "source_sha256": "a1b875e82e6de934eebe3b03d3cd666de8c45e4e58bbad011f806d525ce087b9",
-      "export_sha256": "a1b875e82e6de934eebe3b03d3cd666de8c45e4e58bbad011f806d525ce087b9"
-    },
-    {
-      "path": "examples/public-demo/acceptance.md",
-      "source_sha256": "274f27f9cc9d240ce3a3e1d8050ac53e50e3936efd17b162b0a8cd5c5aaaf4e2",
-      "export_sha256": "274f27f9cc9d240ce3a3e1d8050ac53e50e3936efd17b162b0a8cd5c5aaaf4e2"
     },
     {
       "path": "examples/public-demo/asr-results.csv",
@@ -387,19 +302,14 @@
       "export_sha256": "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6"
     },
     {
-      "path": "frontend/README.md",
-      "source_sha256": "c0c59a7cc8bfcd5a65162bc5129cbfd7b8fd61a32f389c4e61aba66c520cc1c4",
-      "export_sha256": "c0c59a7cc8bfcd5a65162bc5129cbfd7b8fd61a32f389c4e61aba66c520cc1c4"
-    },
-    {
       "path": "frontend/env.d.ts",
       "source_sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
       "export_sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5"
     },
     {
       "path": "frontend/index.html",
-      "source_sha256": "ca718fb736853c9fb85c6239b2bad4d68560c51f8dce570f2a4d77327389f69a",
-      "export_sha256": "ca718fb736853c9fb85c6239b2bad4d68560c51f8dce570f2a4d77327389f69a"
+      "source_sha256": "41cf82c565e240a0750f3217feffd1d536e367339a4c0509f13d7a354910c6be",
+      "export_sha256": "41cf82c565e240a0750f3217feffd1d536e367339a4c0509f13d7a354910c6be"
     },
     {
       "path": "frontend/package-lock.json",
@@ -657,11 +567,6 @@
       "export_sha256": "a8077641e1c041aa3189c9d369505f18fb143a88092395f7a8687049149d1467"
     },
     {
-      "path": "frontend/src/assets/NByangan.svg",
-      "source_sha256": "93bd0829e23bd422b9f27497572bb60b344fbffefa9fd1fc9905c3db204bca80",
-      "export_sha256": "93bd0829e23bd422b9f27497572bb60b344fbffefa9fd1fc9905c3db204bca80"
-    },
-    {
       "path": "frontend/src/assets/background.svg",
       "source_sha256": "d7103c446b85074c5b5bd331d3718561ac674229c79461f5088f283bb96aa13b",
       "export_sha256": "d7103c446b85074c5b5bd331d3718561ac674229c79461f5088f283bb96aa13b"
@@ -670,11 +575,6 @@
       "path": "frontend/src/assets/base.css",
       "source_sha256": "1ff33d4ae1c291b4efab676d1ded192f403390e7d64ba889eca26bd209c97076",
       "export_sha256": "1ff33d4ae1c291b4efab676d1ded192f403390e7d64ba889eca26bd209c97076"
-    },
-    {
-      "path": "frontend/src/assets/budaidise.svg",
-      "source_sha256": "8e96a6829bf52726d8b07cadd410cd3a82f68911b27ead1c0b2fa25cd69d8010",
-      "export_sha256": "8e96a6829bf52726d8b07cadd410cd3a82f68911b27ead1c0b2fa25cd69d8010"
     },
     {
       "path": "frontend/src/assets/ivr/end.svg",
@@ -723,8 +623,8 @@
     },
     {
       "path": "frontend/src/assets/logo.svg",
-      "source_sha256": "6ad70cdb00b11e9b3fd7dd28538854c72eeda30090cd1bf74af70c64f87cde84",
-      "export_sha256": "6ad70cdb00b11e9b3fd7dd28538854c72eeda30090cd1bf74af70c64f87cde84"
+      "source_sha256": "18c16bad35ce5241585a768d20716a415e817260ac83ea433427115884d50e70",
+      "export_sha256": "18c16bad35ce5241585a768d20716a415e817260ac83ea433427115884d50e70"
     },
     {
       "path": "frontend/src/assets/main.less",
@@ -733,7 +633,7 @@
     },
     {
       "path": "frontend/src/assets/ringing.wav",
-      "source_sha256": "f8fa2c7e9cac450e796eb87ab3a6c2fe88a4bb0467f8483fd1b69923a85bc55d",
+      "source_sha256": "7c622184096641433985080086a3f6170eba09495f0292b002df9327aad82cf4",
       "export_sha256": "7c622184096641433985080086a3f6170eba09495f0292b002df9327aad82cf4"
     },
     {
@@ -818,8 +718,8 @@
     },
     {
       "path": "frontend/src/consts/branding.ts",
-      "source_sha256": "256587f74030d7c9bf8e646d4fc841894b2c3208abb0a8dc27f27bd2a3a9dc8e",
-      "export_sha256": "256587f74030d7c9bf8e646d4fc841894b2c3208abb0a8dc27f27bd2a3a9dc8e"
+      "source_sha256": "5a289567b21ef190e78dd8155e80e0c18ffb9fb941257305133d2d22b5e9a62c",
+      "export_sha256": "5a289567b21ef190e78dd8155e80e0c18ffb9fb941257305133d2d22b5e9a62c"
     },
     {
       "path": "frontend/src/consts/errorCode.ts",
@@ -953,7 +853,7 @@
     },
     {
       "path": "frontend/src/services/sip/__tests__/SipService.test.ts",
-      "source_sha256": "ae9e4772b78c04ff9425663e08d223a17c9614725eed504f85caaa42033d4a29",
+      "source_sha256": "9943a4f6ce748f7a434eee2e0db9ed83ac83bf212f17df36f7efc117bce040cd",
       "export_sha256": "9943a4f6ce748f7a434eee2e0db9ed83ac83bf212f17df36f7efc117bce040cd"
     },
     {
@@ -1063,7 +963,7 @@
     },
     {
       "path": "frontend/src/utils/axios.ts",
-      "source_sha256": "7e1f8c36bd1217f390c1d439c53e825a5a5b777e2b615f2667d859f46f8deee5",
+      "source_sha256": "e476ee4d11a258b3aef37ce91d0b23e190a6974120cc802b0718306bb4449e7c",
       "export_sha256": "e476ee4d11a258b3aef37ce91d0b23e190a6974120cc802b0718306bb4449e7c"
     },
     {
@@ -1458,8 +1358,8 @@
     },
     {
       "path": "frontend/src/views/HomeView.vue",
-      "source_sha256": "a17eb37d78d24d6a16f187ea3a7d8068a5381944386a22d37542ea1b670292c8",
-      "export_sha256": "a17eb37d78d24d6a16f187ea3a7d8068a5381944386a22d37542ea1b670292c8"
+      "source_sha256": "2844a2d22201c5c5b6a10d885da1a58c5fd6ad8ce68a7df2bc62a707dbf61225",
+      "export_sha256": "2844a2d22201c5c5b6a10d885da1a58c5fd6ad8ce68a7df2bc62a707dbf61225"
     },
     {
       "path": "frontend/src/views/IVRManagement/components/dialog.vue",
@@ -1568,13 +1468,13 @@
     },
     {
       "path": "frontend/src/views/LoginView.vue",
-      "source_sha256": "b05aa29758daa348e501d221fb218657506aad94924db865fe85819882c4c36d",
-      "export_sha256": "b05aa29758daa348e501d221fb218657506aad94924db865fe85819882c4c36d"
+      "source_sha256": "970c9335586b8e33d4d629837a6011e71f5f146de30f8218ff698df6e89e3faa",
+      "export_sha256": "970c9335586b8e33d4d629837a6011e71f5f146de30f8218ff698df6e89e3faa"
     },
     {
       "path": "frontend/src/views/OverView/index.vue",
-      "source_sha256": "eee5664c7a6ba79bf395ce6b04970eec1c71249c6e60bc55d33466a170e5f45d",
-      "export_sha256": "eee5664c7a6ba79bf395ce6b04970eec1c71249c6e60bc55d33466a170e5f45d"
+      "source_sha256": "ae4445bf5721af89adc1f7a5d43f67911eebf7bb0304cbcd3bb4a01e4588ef38",
+      "export_sha256": "ae4445bf5721af89adc1f7a5d43f67911eebf7bb0304cbcd3bb4a01e4588ef38"
     },
     {
       "path": "frontend/src/views/RobotConfigure/engine/consts/queryOptions.ts",
@@ -1623,7 +1523,7 @@
     },
     {
       "path": "frontend/src/views/RobotConfigure/robot/index.vue",
-      "source_sha256": "f92dacbbdf4dc154b424b76322368953aa4f2c39a9b5adcac2691273982190b5",
+      "source_sha256": "d282f62f92dfeb0161d77202c5ef179b423099fafe8d13747fbb6001c5fbbe19",
       "export_sha256": "d282f62f92dfeb0161d77202c5ef179b423099fafe8d13747fbb6001c5fbbe19"
     },
     {
@@ -1718,7 +1618,7 @@
     },
     {
       "path": "frontend/vite.config.ts",
-      "source_sha256": "5a8388baf1e4c08e930e1c6ef952a379d31f666db2926896740df10bf3a7c206",
+      "source_sha256": "39c24cb199b2461053b9611aa2778bad8d1a15aac657d4250d88aa385cf1ef65",
       "export_sha256": "39c24cb199b2461053b9611aa2778bad8d1a15aac657d4250d88aa385cf1ef65"
     },
     {
@@ -2398,7 +2298,7 @@
     },
     {
       "path": "och-ai/src/test/java/com/och/ai/tts/TtsProviderRegistryTest.java",
-      "source_sha256": "75efea3960c7d286c1439939b77031d3baf5de4895eb629283a58c46e7ebf4bb",
+      "source_sha256": "dce30b55fdbb31b770b1eb1257eca25f0df33cfe833fed73f555aff11c28b35b",
       "export_sha256": "dce30b55fdbb31b770b1eb1257eca25f0df33cfe833fed73f555aff11c28b35b"
     },
     {
@@ -2808,7 +2708,7 @@
     },
     {
       "path": "och-api/src/main/java/com/och/api/service/impl/ICallServiceImpl.java",
-      "source_sha256": "038e109e236531e8c6cc01f9d3d4e7d5292754cb495c1b34fada6e1f89a24add",
+      "source_sha256": "718e35a2b5fe66a3f218241fdacce569080e20602c758154408931d395f526a8",
       "export_sha256": "718e35a2b5fe66a3f218241fdacce569080e20602c758154408931d395f526a8"
     },
     {
@@ -2903,7 +2803,7 @@
     },
     {
       "path": "och-api/src/test/java/com/och/api/service/impl/ICallServiceImplTest.java",
-      "source_sha256": "fd598264d5fac20a9ff30db9c902e7275aed64e91223f0c0dd28646989b9ccf6",
+      "source_sha256": "ec4aaaa676d161c8a2a72efc77dda84343e8e51d1b404473574bab7dc8c38cd2",
       "export_sha256": "ec4aaaa676d161c8a2a72efc77dda84343e8e51d1b404473574bab7dc8c38cd2"
     },
     {
@@ -3423,7 +3323,7 @@
     },
     {
       "path": "och-esl/src/main/java/com/och/esl/client/FsClient.java",
-      "source_sha256": "aac32e6e28e1aedfbb6011a88123e5196b8f4af977913e5b2a54b31f6aa7f24b",
+      "source_sha256": "0fbcd7e48b330d857d73d2f433e2346f440260217d2fc3eb53838691f4e9cc33",
       "export_sha256": "0fbcd7e48b330d857d73d2f433e2346f440260217d2fc3eb53838691f4e9cc33"
     },
     {
@@ -3808,7 +3708,7 @@
     },
     {
       "path": "och-esl/src/test/java/com/och/esl/client/FsClientInternalDialEndpointTest.java",
-      "source_sha256": "b42aaf4c27ad5103e52ff49d2a9b42fccb28ec124b1d3662f345ea8da0d4b1d6",
+      "source_sha256": "1748f7b3bea79616a71eb58efb4676ab88d24292ad0eda9b2ddba97cf6aadde1",
       "export_sha256": "1748f7b3bea79616a71eb58efb4676ab88d24292ad0eda9b2ddba97cf6aadde1"
     },
     {
@@ -3838,12 +3738,12 @@
     },
     {
       "path": "och-esl/src/test/java/com/och/esl/handler/route/FsAgentRouteHandlerTest.java",
-      "source_sha256": "2e6df7ef1b7ca5f1d021bdf12c521ab24305c865b29657e5f000df009360daab",
+      "source_sha256": "5d4f5e2d117daf61e843458ce534f31c4a2ea0a7dfafe8cdb04df2f16d5beaa9",
       "export_sha256": "5d4f5e2d117daf61e843458ce534f31c4a2ea0a7dfafe8cdb04df2f16d5beaa9"
     },
     {
       "path": "och-esl/src/test/java/com/och/esl/handler/route/FsSkillGroupRouteHandlerTest.java",
-      "source_sha256": "f56b8e1f0236dcdb6d936ac2b9e266c5c13686c819ade53db4f4e856c7799cbc",
+      "source_sha256": "01f544214d4383ee4628fa51a8ccd0de0346f128e618ac7fae9435b9e2b8334d",
       "export_sha256": "01f544214d4383ee4628fa51a8ccd0de0346f128e618ac7fae9435b9e2b8334d"
     },
     {
@@ -3858,7 +3758,7 @@
     },
     {
       "path": "och-esl/src/test/java/com/och/esl/service/RecordingUploadServiceTest.java",
-      "source_sha256": "4786dea5a0857ad0e438c46d839416d26a1c76ab6c03e95539675a047a65db54",
+      "source_sha256": "f43bd78c9181b653cc20bf77c744a34d915b78a05ba404c52d6f6784e0a5cd4d",
       "export_sha256": "f43bd78c9181b653cc20bf77c744a34d915b78a05ba404c52d6f6784e0a5cd4d"
     },
     {
@@ -3868,7 +3768,7 @@
     },
     {
       "path": "och-esl/src/test/java/com/och/esl/utils/InitialCallDirectionResolverTest.java",
-      "source_sha256": "07141ecabcd4d856ee4fa8c0bd80cee4e0a1c910c1921c443931a91afe670a89",
+      "source_sha256": "d78eb387376b543ddbe5629ebe9c54fcf413c6ee9e15ded4310bc1aa34ec7b77",
       "export_sha256": "d78eb387376b543ddbe5629ebe9c54fcf413c6ee9e15ded4310bc1aa34ec7b77"
     },
     {
@@ -4118,32 +4018,32 @@
     },
     {
       "path": "och-ivr/src/main/java/com/och/ivr/handler/node/FlowAssignHandler.java",
-      "source_sha256": "cd68a990bd06bed349dcbd55862b4aac9484ffa7efeebaa8966a3eb7d8b0059d",
+      "source_sha256": "ccc63ecabe2205e5702204d555707e853439a265eec7e49667ef9f3836ac8860",
       "export_sha256": "ccc63ecabe2205e5702204d555707e853439a265eec7e49667ef9f3836ac8860"
     },
     {
       "path": "och-ivr/src/main/java/com/och/ivr/handler/node/FlowConditionHandler.java",
-      "source_sha256": "695dfec0b6d415b7a33ff2cf64efe3c44b2681c29d4fcc4a207c003f82897769",
+      "source_sha256": "02ac86ce04bc6736aa81807a3263b5aa509d14aa6cdd99a30176fe47f22d54e1",
       "export_sha256": "02ac86ce04bc6736aa81807a3263b5aa509d14aa6cdd99a30176fe47f22d54e1"
     },
     {
       "path": "och-ivr/src/main/java/com/och/ivr/handler/node/FlowCustomHandlerRouter.java",
-      "source_sha256": "1f685e7c944ddccd0430623b8e93c854e3c694bcab6530fbe5cf1e7a978a424a",
+      "source_sha256": "4aaadab7a0acb5f64b2f57f7104b82f7042b8e050159cab6598798871c7b0e0c",
       "export_sha256": "4aaadab7a0acb5f64b2f57f7104b82f7042b8e050159cab6598798871c7b0e0c"
     },
     {
       "path": "och-ivr/src/main/java/com/och/ivr/handler/node/FlowDatabaseHandler.java",
-      "source_sha256": "a2eb8e4f09bb60db66e43d057a639bc774f66dea7e29418f4bc585ab2d8c2ccf",
+      "source_sha256": "6a15634efef48af3683d77c10f5685f18e9a175e33bfadd8930626f93e6119d8",
       "export_sha256": "6a15634efef48af3683d77c10f5685f18e9a175e33bfadd8930626f93e6119d8"
     },
     {
       "path": "och-ivr/src/main/java/com/och/ivr/handler/node/FlowExpression.java",
-      "source_sha256": "dfc541543d0929b67da29de8813724bb408f71df1c05011aa2a09443058eaf70",
+      "source_sha256": "d35ec2b3b3d42384f9b2d9ebf1b561dfebd122367d9232de8ab5192f66003adf",
       "export_sha256": "d35ec2b3b3d42384f9b2d9ebf1b561dfebd122367d9232de8ab5192f66003adf"
     },
     {
       "path": "och-ivr/src/main/java/com/och/ivr/handler/node/FlowFunctions.java",
-      "source_sha256": "d9605c8c5c90ec06665409d2077d8ab8a882b8076c1ac5c7568d6ad808d40d0f",
+      "source_sha256": "7afcbdc5fa2e728d9d83632885c25aa09450b8bcfcaf70ecf58a64a1dd5be0a6",
       "export_sha256": "7afcbdc5fa2e728d9d83632885c25aa09450b8bcfcaf70ecf58a64a1dd5be0a6"
     },
     {
@@ -4183,7 +4083,7 @@
     },
     {
       "path": "och-ivr/src/main/java/com/och/ivr/handler/node/FlowScriptHandler.java",
-      "source_sha256": "d01d1c1aea7eeb542fc69f0b20940fdbaad2c8f015ce6046218b61d25ee60d37",
+      "source_sha256": "e7eadab62239a67a086ad660c40fbf94c246fa11348aab4f6f982c1e629de603",
       "export_sha256": "e7eadab62239a67a086ad660c40fbf94c246fa11348aab4f6f982c1e629de603"
     },
     {
@@ -4198,7 +4098,7 @@
     },
     {
       "path": "och-ivr/src/main/java/com/och/ivr/handler/node/FlowVariables.java",
-      "source_sha256": "de70c69358224a0124826b3160bd1c3d7a0c328d00e4d1a06ff8144e59f79ffc",
+      "source_sha256": "b4d9235f4d7acbdacadc5a4f201d514c8e21760ac71c928eb957874d7467dc6f",
       "export_sha256": "b4d9235f4d7acbdacadc5a4f201d514c8e21760ac71c928eb957874d7467dc6f"
     },
     {
@@ -4258,17 +4158,17 @@
     },
     {
       "path": "och-ivr/src/main/java/com/och/ivr/properties/FlowAssignNodeProperties.java",
-      "source_sha256": "d43366f9375de26ccbd31bf9574d048899bfc6b20034a32370eaee9c4d7d889f",
+      "source_sha256": "a2057f29afbc4cf10285bfbbbbbebd2a4869bb0ae0b9d568432098e23f1bde0f",
       "export_sha256": "a2057f29afbc4cf10285bfbbbbbebd2a4869bb0ae0b9d568432098e23f1bde0f"
     },
     {
       "path": "och-ivr/src/main/java/com/och/ivr/properties/FlowConditionNodeProperties.java",
-      "source_sha256": "11b9e75d22717751b7f8af3c3b8736774cb7e3a812b0e3aaedb7d5e0dfbb4d54",
+      "source_sha256": "2b82f6e6d62affd1f3e82085962052813a7c9de6b27565b815612b19c47785c8",
       "export_sha256": "2b82f6e6d62affd1f3e82085962052813a7c9de6b27565b815612b19c47785c8"
     },
     {
       "path": "och-ivr/src/main/java/com/och/ivr/properties/FlowDatabaseNodeProperties.java",
-      "source_sha256": "c83fab8972e4be239d67ad1e8611048d0a4c1b44d1a2c77272e5f86402b10f87",
+      "source_sha256": "3011c35942cbc76d3da5f806dd31c2d572f63985cf1e300d9dab65a954e381d8",
       "export_sha256": "3011c35942cbc76d3da5f806dd31c2d572f63985cf1e300d9dab65a954e381d8"
     },
     {
@@ -4298,7 +4198,7 @@
     },
     {
       "path": "och-ivr/src/main/java/com/och/ivr/properties/FlowScriptNodeProperties.java",
-      "source_sha256": "c19d0e3ee39e167f9355760dcbe333cf7c1ef7d918ce0959896aeb33ca1cf6cf",
+      "source_sha256": "b08e6b8d44a8b2427c63bd9b22ec364497b4fd28c18791b24ba3ebd215368ca6",
       "export_sha256": "b08e6b8d44a8b2427c63bd9b22ec364497b4fd28c18791b24ba3ebd215368ca6"
     },
     {
@@ -4358,12 +4258,12 @@
     },
     {
       "path": "och-ivr/src/test/java/com/och/ivr/handler/route/FlowAgentRouteHandlerTest.java",
-      "source_sha256": "88430f524a831d5e41d467089b79ce514cef994afc8b437aabdacf28c59d5a14",
+      "source_sha256": "adb3c8e4f79f89a62ad901e9f6d5c43661d9c9e3d8c7bd6c43e36843ce373ba7",
       "export_sha256": "adb3c8e4f79f89a62ad901e9f6d5c43661d9c9e3d8c7bd6c43e36843ce373ba7"
     },
     {
       "path": "och-ivr/src/test/java/com/och/ivr/handler/route/FlowSkillGroupRouteHandlerTest.java",
-      "source_sha256": "a55e31f8853b1c1a9c2400f94ae8c5ecc5ad90c657f71a6a812c933c767eff76",
+      "source_sha256": "a70d316925a08c58bb9efd3d647cc1105e69705dba11aad5e8de01807e5fa286",
       "export_sha256": "a70d316925a08c58bb9efd3d647cc1105e69705dba11aad5e8de01807e5fa286"
     },
     {
@@ -4383,7 +4283,7 @@
     },
     {
       "path": "och-mrcp/src/main/java/com/och/config/MrcpConfig.java",
-      "source_sha256": "dcf3be69a1d9a8b2488081ec670866e04a92ac5cbceef35548c13154f1677e9e",
+      "source_sha256": "18f8dab0a19ffe61184c70c9290ecd63a9b91014a74f51a0c81696086e773c3f",
       "export_sha256": "18f8dab0a19ffe61184c70c9290ecd63a9b91014a74f51a0c81696086e773c3f"
     },
     {
@@ -4438,7 +4338,7 @@
     },
     {
       "path": "och-mrcp/src/main/java/com/och/engine/TencentTtsEngine.java",
-      "source_sha256": "435954f1d8e4674c2b4fc88a41f4b9937b69354ec52319185761db083ce737e6",
+      "source_sha256": "cae153f8f74fbb6ad6e5a7434a77428f1aff8bc1901a014fd9a0455609737f2b",
       "export_sha256": "cae153f8f74fbb6ad6e5a7434a77428f1aff8bc1901a014fd9a0455609737f2b"
     },
     {
@@ -4508,7 +4408,7 @@
     },
     {
       "path": "och-mrcp/src/main/java/com/och/mrcp/MrcpSession.java",
-      "source_sha256": "4a4c7ec70c4a1723c49f0820eacde04f764a38f043507da626ac05fbeba7696d",
+      "source_sha256": "02cd1603624184709b6acaa5eed2244ba1a52b954d59479985341097bada2888",
       "export_sha256": "02cd1603624184709b6acaa5eed2244ba1a52b954d59479985341097bada2888"
     },
     {
@@ -4558,7 +4458,7 @@
     },
     {
       "path": "och-mrcp/src/main/java/com/och/rtp/RtpHandler.java",
-      "source_sha256": "d656ba031bbc839e4bad90b1a286f978c8791481b90f27f243c22ae4b8f39989",
+      "source_sha256": "7de9bc86def55d0c609e2a764a121337292a6c0c159549b7ca6c859768b085f7",
       "export_sha256": "7de9bc86def55d0c609e2a764a121337292a6c0c159549b7ca6c859768b085f7"
     },
     {
@@ -4568,17 +4468,17 @@
     },
     {
       "path": "och-mrcp/src/main/java/com/och/rtp/RtpServer.java",
-      "source_sha256": "10cd25e502f88291494818dcd7f8218e94f048ab8d84131566d9e0879ad06f85",
+      "source_sha256": "1839a94e2f7e09ba6f366e5572377d456bb61b4265dcca1421bcf368a6b4617c",
       "export_sha256": "1839a94e2f7e09ba6f366e5572377d456bb61b4265dcca1421bcf368a6b4617c"
     },
     {
       "path": "och-mrcp/src/main/java/com/och/rtp/RtpServerRegistry.java",
-      "source_sha256": "a24c784630749626ff141da4e782abe474c1dc26347f8df1fbe19240d78832e6",
+      "source_sha256": "1ca278d3aca090ceb88d1c985200fb5b853b8ab88a4f1709c1f1e8d2f7a3772a",
       "export_sha256": "1ca278d3aca090ceb88d1c985200fb5b853b8ab88a4f1709c1f1e8d2f7a3772a"
     },
     {
       "path": "och-mrcp/src/main/java/com/och/sip/core/codec/MrcpMessageCodec.java",
-      "source_sha256": "c22eb0eeb2268cbe77ec8c3c62c868ae16b72e2cc3e580dd43a7c721b43a6202",
+      "source_sha256": "4798b7f6867cf6734998d3894498499ac2df2dc365db0e594ee46ade016b62b4",
       "export_sha256": "4798b7f6867cf6734998d3894498499ac2df2dc365db0e594ee46ade016b62b4"
     },
     {
@@ -4628,7 +4528,7 @@
     },
     {
       "path": "och-mrcp/src/main/java/com/och/sip/core/transaction/TransactionContext.java",
-      "source_sha256": "3750986d7ebafdc535c07e5459b728cef5882ae8813112c2c9608e50b0226c9a",
+      "source_sha256": "21bda2b8b23e278e356fa84aafae815cdc5f86bd8d34f7dbb8d720ec78ca7c02",
       "export_sha256": "21bda2b8b23e278e356fa84aafae815cdc5f86bd8d34f7dbb8d720ec78ca7c02"
     },
     {
@@ -4643,7 +4543,7 @@
     },
     {
       "path": "och-mrcp/src/main/java/com/och/sip/sdp/AudioVideoStrategy.java",
-      "source_sha256": "33c5cd49fe996aa90fc9121e44dd852c9c5841f070b73253c1e3b6a1b50769bd",
+      "source_sha256": "d076ce901ca90707f461617ef0f8792d05aca48aa48bd06475663c853f00db63",
       "export_sha256": "d076ce901ca90707f461617ef0f8792d05aca48aa48bd06475663c853f00db63"
     },
     {
@@ -4703,7 +4603,7 @@
     },
     {
       "path": "och-mrcp/src/main/java/com/och/sip/transport/handler/SdpNegotiationHandler.java",
-      "source_sha256": "cdb09190a7de86ade200e8b5bbbd23b76684d0e607405f73ed2b05d07c6313a0",
+      "source_sha256": "944256b4d30bc9ea37fc8aa459696ed57108a8da89aeca0a7bcf9b22e4855920",
       "export_sha256": "944256b4d30bc9ea37fc8aa459696ed57108a8da89aeca0a7bcf9b22e4855920"
     },
     {
@@ -4778,7 +4678,7 @@
     },
     {
       "path": "och-security/src/main/java/com/och/security/config/SecurityConfig.java",
-      "source_sha256": "cbe82923f229761c62c957593370d0b914dfc7d135bd0dc4c8167e85e73f192b",
+      "source_sha256": "4757bb791ac3b12941d83d7377ed67230f6d40c3cc3337ae6fd9ed325a54337f",
       "export_sha256": "4757bb791ac3b12941d83d7377ed67230f6d40c3cc3337ae6fd9ed325a54337f"
     },
     {
@@ -4793,7 +4693,7 @@
     },
     {
       "path": "och-security/src/main/java/com/och/security/handler/GlobalExceptionHandler.java",
-      "source_sha256": "44585bdfbac679fda0238f902fe9ca7659f1a7f4f2c0a7f8c7ce9417aa694c43",
+      "source_sha256": "67eaa3f3b35258e3bbce4485e8d963c374de905d44b814b66a251137d8d6f58b",
       "export_sha256": "67eaa3f3b35258e3bbce4485e8d963c374de905d44b814b66a251137d8d6f58b"
     },
     {
@@ -4923,12 +4823,12 @@
     },
     {
       "path": "och-system/src/main/java/com/och/system/domain/entity/CallRoute.java",
-      "source_sha256": "f710c4a342cd0619f078ef2fbe45b6abb349fb98e80ae4bc058169d2602c85ac",
+      "source_sha256": "9a467b25f72ae99bd422d6b08d7fe0890b5fa01716570564eb04c2c5c836443b",
       "export_sha256": "9a467b25f72ae99bd422d6b08d7fe0890b5fa01716570564eb04c2c5c836443b"
     },
     {
       "path": "och-system/src/main/java/com/och/system/domain/entity/CallSchedule.java",
-      "source_sha256": "66c2e1e4042a07c4824c41263ec0747a4788fc704d6784ba64bf0844fc5e854c",
+      "source_sha256": "6898a8dcfbebf0b25426588c18373e9bb8229064e06a2047b2acc0fa05d79f02",
       "export_sha256": "6898a8dcfbebf0b25426588c18373e9bb8229064e06a2047b2acc0fa05d79f02"
     },
     {
@@ -6283,7 +6183,7 @@
     },
     {
       "path": "och-system/src/main/resources/mapper/CallRouteMapper.xml",
-      "source_sha256": "5725d4eb4f296bbddb4c1a35cb29d6b98cfad603ebfca6343aadcb55208482ba",
+      "source_sha256": "4255090a82a63a8682d28dbc4ed951f2aad2b7a2605bba19b9c5eff36dac02a8",
       "export_sha256": "4255090a82a63a8682d28dbc4ed951f2aad2b7a2605bba19b9c5eff36dac02a8"
     },
     {
@@ -6433,7 +6333,7 @@
     },
     {
       "path": "och-system/src/test/java/com/och/system/constant/ValidationConstantsTest.java",
-      "source_sha256": "e09e87474506af57b5e22382a4265bb10564b733461accea1a38594127a9b91d",
+      "source_sha256": "78379aadbe2b9a5de36dbaaec3734b4dbf5c4b533bc00cdbdd6257195293178c",
       "export_sha256": "78379aadbe2b9a5de36dbaaec3734b4dbf5c4b533bc00cdbdd6257195293178c"
     },
     {
@@ -6618,8 +6518,8 @@
     },
     {
       "path": "tools/open-source/check_demo_browser.py",
-      "source_sha256": "f41f4228093167fd928718faff96e78f66867eaa4e3ac365cfde459d014bda3d",
-      "export_sha256": "f41f4228093167fd928718faff96e78f66867eaa4e3ac365cfde459d014bda3d"
+      "source_sha256": "ef3a031fa1015baa7d98797fde52d78f12df1d12bc1bd094c8c1ad93a3eb3f5b",
+      "export_sha256": "ef3a031fa1015baa7d98797fde52d78f12df1d12bc1bd094c8c1ad93a3eb3f5b"
     },
     {
       "path": "tools/open-source/check_runtime.ps1",
@@ -6638,8 +6538,8 @@
     },
     {
       "path": "tools/open-source/export_release.py",
-      "source_sha256": "104c43fe624dff5e24b42f6800471eaff06bcb48c905916776d0693a727b38df",
-      "export_sha256": "104c43fe624dff5e24b42f6800471eaff06bcb48c905916776d0693a727b38df"
+      "source_sha256": "ff0254b1a81a8b5a591b57212a5e5de6790ea8cb315fcc207497b75693bb8ac5",
+      "export_sha256": "ff0254b1a81a8b5a591b57212a5e5de6790ea8cb315fcc207497b75693bb8ac5"
     },
     {
       "path": "tools/open-source/extract_schema.py",
@@ -6648,8 +6548,8 @@
     },
     {
       "path": "tools/open-source/finalize_demo.py",
-      "source_sha256": "f02b99b04af94f8be3970f8dc4dfaf21395cb8bcd5b5fe9e3ae1328ca517e633",
-      "export_sha256": "f02b99b04af94f8be3970f8dc4dfaf21395cb8bcd5b5fe9e3ae1328ca517e633"
+      "source_sha256": "b632516848e587d3a68e151598350548d2dd87f9ea58ac4657cfa732821c7571",
+      "export_sha256": "b632516848e587d3a68e151598350548d2dd87f9ea58ac4657cfa732821c7571"
     },
     {
       "path": "tools/open-source/generate_mysql_schema.mjs",
@@ -6663,8 +6563,8 @@
     },
     {
       "path": "tools/open-source/package_demo.py",
-      "source_sha256": "f7abbb70df73dde633415040c0a6094233920d7ea37c2f5274829847cee4853f",
-      "export_sha256": "f7abbb70df73dde633415040c0a6094233920d7ea37c2f5274829847cee4853f"
+      "source_sha256": "ae1f992da9f14c4cb70afaadcb1740566a4d0fb2c98372c24195465b0dc84e29",
+      "export_sha256": "ae1f992da9f14c4cb70afaadcb1740566a4d0fb2c98372c24195465b0dc84e29"
     },
     {
       "path": "tools/open-source/prepare_docker_env.py",
@@ -6678,12 +6578,12 @@
     },
     {
       "path": "tools/open-source/test_private_deployment.py",
-      "source_sha256": "c0f6b6b6ba89268a4b625c5f6fd58ed9d45bfc1d55e01a83e9ef505ce0333b82",
-      "export_sha256": "c0f6b6b6ba89268a4b625c5f6fd58ed9d45bfc1d55e01a83e9ef505ce0333b82"
+      "source_sha256": "1559aa920826e3d6be34dfe8fb8310f46d4f10db7158cb7b15fa67ab7edbd08f",
+      "export_sha256": "1559aa920826e3d6be34dfe8fb8310f46d4f10db7158cb7b15fa67ab7edbd08f"
     },
     {
       "path": "tools/open-source/test_release_tools.py",
-      "source_sha256": "a616a091329880a3546c89b35dfd050bf267d0fc6f3cd6b19803dd7a907fc445",
+      "source_sha256": "2ecc738f7c894c498cabc143243d40d4313709c901f8a9a0ed4c4488fa7939b7",
       "export_sha256": "2ecc738f7c894c498cabc143243d40d4313709c901f8a9a0ed4c4488fa7939b7"
     },
     {
@@ -6693,8 +6593,8 @@
     },
     {
       "path": "tools/open-source/verify_release.py",
-      "source_sha256": "b99add7d367ab40d1f6df83dc38522bdf892b628156987ca9fc78236d675d578",
-      "export_sha256": "b99add7d367ab40d1f6df83dc38522bdf892b628156987ca9fc78236d675d578"
+      "source_sha256": "27d801ac66fa535650cefa0faf6a5aa7a7001ff8f1d54191cc813aca9870ab57",
+      "export_sha256": "27d801ac66fa535650cefa0faf6a5aa7a7001ff8f1d54191cc813aca9870ab57"
     }
   ],
   "public_config_replacements": {
@@ -6704,29 +6604,11 @@
     "och-mrcp/src/main/resources/sip.conf": "mrcp-sip.conf",
     "och-mrcp/src/main/resources/mrcp.conf": "mrcp.conf"
   },
-  "normalized_local_addresses": [
-    "frontend/vite.config.ts",
-    "och-api/src/test/java/com/och/api/service/impl/ICallServiceImplTest.java",
-    "och-esl/src/test/java/com/och/esl/client/FsClientInternalDialEndpointTest.java",
-    "och-esl/src/test/java/com/och/esl/handler/route/FsAgentRouteHandlerTest.java",
-    "och-esl/src/test/java/com/och/esl/handler/route/FsSkillGroupRouteHandlerTest.java",
-    "och-esl/src/test/java/com/och/esl/service/RecordingUploadServiceTest.java",
-    "och-esl/src/test/java/com/och/esl/utils/InitialCallDirectionResolverTest.java",
-    "och-ivr/src/test/java/com/och/ivr/handler/route/FlowAgentRouteHandlerTest.java",
-    "och-ivr/src/test/java/com/och/ivr/handler/route/FlowSkillGroupRouteHandlerTest.java",
-    "och-security/src/main/java/com/och/security/config/SecurityConfig.java",
-    "och-system/src/test/java/com/och/system/constant/ValidationConstantsTest.java",
-    "tools/open-source/test_release_tools.py"
-  ],
+  "normalized_local_addresses": [],
   "generated_assets": [
     "frontend/src/assets/ringing.wav"
   ],
-  "synthetic_test_credentials": [
-    "frontend/src/services/sip/__tests__/SipService.test.ts"
-  ],
-  "excluded_backups_and_templates": [
-    "docs/open-source/RELEASE_README.md",
-    "och-esl/src/main/java/com/och/esl/client/FsClient.java.bak"
-  ],
+  "synthetic_test_credentials": [],
+  "excluded_backups_and_templates": [],
   "frontend_included": true
 }

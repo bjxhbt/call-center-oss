@@ -33,8 +33,11 @@ def package(root, frontend, build, output, nginx):
             if not built_from.is_file() or digest(path) != digest(built_from):
                 raise ValueError(f"Artifact source differs: {relative}")
             compared += 1
-    stage = output / "XinhengBotong-MySQL-Demo"
-    shutil.copytree(root / "deploy/demo", stage)
+    stage = output / "XinhengZhishu-MySQL-Demo"
+    shutil.copytree(root / "deploy/demo", stage,
+                    ignore=lambda directory, names: [name for name in names if name.lower().endswith('.md')])
+    shutil.copyfile(exported / "README.md", stage / "README.md")
+    shutil.copytree(exported / "assets", stage / "assets")
     upstream_hashes={
         'freeswitch.tar.gz':'6ab49ae26f45e35d3b88ae12b5d915a10aeabafcc0fd24a427c3bab4012c9e55',
         'sofia-sip.tar.gz':'a63ba972e4b7839b50bfd1277e150ebdb70ecd9261894bc65a74a7d3e995d533',
@@ -55,7 +58,6 @@ def package(root, frontend, build, output, nginx):
     shutil.copyfile(output / "source-release/OpenCallHub-public-source.zip", stage / "source/OpenCallHub-public-source.zip")
     shutil.copyfile(output / "source-release/SHA256SUMS", stage / "source/SHA256SUMS")
     shutil.copyfile(root / "LICENSE", stage / "LICENSE")
-    shutil.copyfile(root / "NOTICE.md", stage / "NOTICE.md")
     shutil.copyfile(frontend / "LICENSE", stage / "licenses/frontend-LICENSE")
     shutil.copyfile(nginx / "nginx.exe", stage / "bin/nginx/nginx.exe")
     shutil.copyfile(nginx / "conf/mime.types", stage / "config/mime.types")
@@ -81,7 +83,7 @@ def package(root, frontend, build, output, nginx):
     dependency_sources = root / ".codex-build/mysql-demo/dependency-sources"
     for name in ["och-common-1.0.1-sources.jar","mysql-connector-j-9.5.0-sources.jar"]:
         shutil.copyfile(dependency_sources / name, stage / "source" / name)
-    third_party = ("# Third-party components\n\nBackend and och-common: GPLv3 / GPL-3.0-only; retain LICENSE and NOTICE.md.\n"
+    third_party = ("\n\n## Deployment dependencies\n\nBackend and och-common: GPLv3 / GPL-3.0-only; retain LICENSE and the source notices in this README.\n"
                    "Frontend: Apache-2.0; see licenses/frontend-LICENSE.\n"
                    "Windows nginx: see licenses/nginx, including OpenSSL, PCRE and zlib notices.\n"
                    "MySQL Connector/J 9.5.0: see embedded LICENSE; matching source supplied.\n"
@@ -91,10 +93,11 @@ def package(root, frontend, build, output, nginx):
                    "Corresponding project source: source/OpenCallHub-public-source.zip\n"
                    "Common source: https://repo.maven.apache.org/maven2/io/github/sxwdmjy/och-common/1.0.1/\n"
                    "Connector source: https://repo.maven.apache.org/maven2/com/mysql/mysql-connector-j/9.5.0/\n\n## Embedded libraries\n\n")
-    (stage / "THIRD-PARTY.md").write_text(third_party + ''.join('- ' + Path(n).name + '\n' for n in libraries),encoding="utf-8")
-    info = {"brand":"信恒博通","database":"MySQL 8.4","source_files_compared":compared,
+    with (stage / "README.md").open("a", encoding="utf-8") as readme:
+        readme.write(third_party + ''.join('- ' + Path(n).name + '\n' for n in libraries))
+    info = {"brand":"信恒知枢·呼叫中心","database":"MySQL 8.4","source_files_compared":compared,
             "source_sha256":digest(stage / "source/OpenCallHub-public-source.zip"),"backend_sha256":digest(stage / "app/och-api.jar"),
-            "build":"JDK 17 / Maven / Vite production; sanitized source only", "runtime":"See VALIDATION.md for actual acceptance scope"}
+            "build":"JDK 17 / Maven / Vite production; sanitized source only", "runtime":"See README.md for the current validation scope"}
     (stage / "build-info.json").write_text(json.dumps(info,ensure_ascii=False,indent=2)+'\n',encoding="utf-8")
     return stage
 

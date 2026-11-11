@@ -40,9 +40,9 @@ class PrivateDeploymentTests(unittest.TestCase):
     def stage(self, directory):
         stage = directory / 'stage'
         for path in ['app/och-api.jar', 'web/index.html', 'docker/compose.yml', 'docker/Dockerfile',
-                     'DOCKER.md', 'VALIDATION.md', 'database/01-schema.sql', 'database/02-seed.sql',
+                     'README.md', 'database/01-schema.sql', 'database/02-seed.sql',
                      'source/SHA256SUMS', 'docker/freeswitch/Dockerfile', 'docker/freeswitch/entrypoint.py',
-                     'tools/DemoFreeSwitch.java', 'PRIVATE-DEPLOYMENT.md', 'tools/DemoObjectStorage.java', 'RUSTFS.md']:
+                     'tools/DemoFreeSwitch.java', 'tools/DemoObjectStorage.java']:
             target = stage / path
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text('test fixture\n', encoding='utf-8')
